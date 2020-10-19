@@ -14,5 +14,25 @@
 
 /include/ "msm8974pro-ab-shinano_common.dtsi"
 
+
+/* TTT WLAN */
+&sdhc_3 {
+	status = "ok";
+
+	non-removable;
+
+	#address-cells = <1>;
+	#size-cells = <0>;
+
+	bcrmf@1 {
+		compatible = "brcm,bcm4339-fmac", "brcm,bcm4329-fmac";
+		reg = <1>;
+
+		brcm,drive-strength = <10>;
+
+	};
+};
+
+
 &soc {
 };
