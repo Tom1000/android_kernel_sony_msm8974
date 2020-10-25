@@ -8,5 +8,10 @@ config SRCARCH
 	string
 	option env="SRCARCH"
 
+#Required for backported drivers to identify the needed helper functions
+config KERNEL_3_4
+	bool
+	default y
+
 source "arch/$SRCARCH/Kconfig"
 source "backports/Kconfig"
