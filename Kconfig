@@ -8,5 +8,10 @@ config SRCARCH
 	string
 	option env="SRCARCH"
 
+#Don't know where this should actually happen, but we need this later on for the backports
+config KERNEL_3_4
+	bool
+	default y
+
 source "arch/$SRCARCH/Kconfig"
 source "backports/Kconfig"
