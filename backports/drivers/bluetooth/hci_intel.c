@@ -29,7 +29,9 @@
 #include <linux/wait.h>
 #include <linux/tty.h>
 #include <linux/platform_device.h>
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,13,0)
 #include <linux/gpio/consumer.h>
+#endif
 #include <linux/acpi.h>
 #include <linux/interrupt.h>
 #include <linux/pm_runtime.h>
