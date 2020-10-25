@@ -25,4 +25,8 @@ iwe_stream_add_point_check(struct iw_request_info *info, char *stream,
 	return res;
 }
 #endif /* LINUX_VERSION_CODE < KERNEL_VERSION(4,1,0) */
+
+#define wireless_nlevent_flush LINUX_BACKPORT(wireless_nlevent_flush)
+static inline void wireless_nlevent_flush(void) {}
+
 #endif /* __BACKPORT_IW_HANDLER_H */
