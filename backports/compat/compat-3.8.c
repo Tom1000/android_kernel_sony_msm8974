@@ -422,7 +422,7 @@ void prandom_bytes(void *buf, int bytes)
 	int i;
 
 	for (i = 0; i < round_down(bytes, sizeof(u32)); i += sizeof(u32)) {
-		u32 random = random32();
+		u32 random = prandom_u32();
 		int j;
 
 		for (j = 0; j < sizeof(u32); j++) {
@@ -432,7 +432,7 @@ void prandom_bytes(void *buf, int bytes)
 	}
 
 	if (i < bytes) {
-		u32 random = random32();
+		u32 random = prandom_u32();
 
 		for (; i < bytes; i++) {
 			p[i] = random;
