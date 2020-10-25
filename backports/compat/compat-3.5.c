@@ -157,11 +157,5 @@ static int devm_gpio_match(struct device *dev, void *res, void *data)
 	return *this == *gpio;
 }
 
-void devm_gpio_free(struct device *dev, unsigned int gpio)
-{
-	WARN_ON(devres_destroy(dev, devm_gpio_release, devm_gpio_match,
-		&gpio));
-	gpio_free(gpio);
-}
-EXPORT_SYMBOL_GPL(devm_gpio_free);
 #endif /* CONFIG_GPIOLIB */
+
