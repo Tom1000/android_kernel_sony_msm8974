@@ -2418,7 +2418,7 @@ static int dib9090_tuner_attach(struct dvb_usb_adapter *adap)
 		8, 0x0486,
 	};
 
-	if (!IS_ENABLED(CONFIG_DVB_DIB9000))
+	if (!IS_ENABLED(CONFIG_BACKPORT_DVB_DIB9000))
 		return -ENODEV;
 	if (dvb_attach(dib0090_fw_register, adap->fe_adap[0].fe, i2c, &dib9090_dib0090_config) == NULL)
 		return -ENODEV;
@@ -2500,7 +2500,7 @@ static int nim9090md_tuner_attach(struct dvb_usb_adapter *adap)
 		0, 0x00ef,
 		8, 0x0406,
 	};
-	if (!IS_ENABLED(CONFIG_DVB_DIB9000))
+	if (!IS_ENABLED(CONFIG_BACKPORT_DVB_DIB9000))
 		return -ENODEV;
 	i2c = dib9000_get_tuner_interface(adap->fe_adap[0].fe);
 	if (dvb_attach(dib0090_fw_register, adap->fe_adap[0].fe, i2c, &nim9090md_dib0090_config[0]) == NULL)

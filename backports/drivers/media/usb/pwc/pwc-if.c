@@ -63,7 +63,7 @@
 #include <linux/module.h>
 #include <linux/poll.h>
 #include <linux/slab.h>
-#ifdef CONFIG_USB_PWC_INPUT_EVDEV
+#ifdef CONFIG_BACKPORT_USB_PWC_INPUT_EVDEV
 #include <linux/usb/input.h>
 #endif
 #include <linux/vmalloc.h>
@@ -129,7 +129,7 @@ static struct usb_driver pwc_driver = {
 #define MAX_DEV_HINTS	20
 #define MAX_ISOC_ERRORS	20
 
-#ifdef CONFIG_USB_PWC_DEBUG
+#ifdef CONFIG_BACKPORT_USB_PWC_DEBUG
 	int pwc_trace = PWC_DEBUG_LEVEL;
 #endif
 static int power_save = -1;
@@ -180,7 +180,7 @@ static void pwc_snapshot_button(struct pwc_device *pdev, int down)
 		PWC_TRACE("Snapshot button released.\n");
 	}
 
-#ifdef CONFIG_USB_PWC_INPUT_EVDEV
+#ifdef CONFIG_BACKPORT_USB_PWC_INPUT_EVDEV
 	if (pdev->button_dev) {
 		input_report_key(pdev->button_dev, KEY_CAMERA, down);
 		input_sync(pdev->button_dev);
@@ -526,7 +526,7 @@ static void pwc_cleanup_queued_bufs(struct pwc_device *pdev,
 	spin_unlock_irqrestore(&pdev->queued_bufs_lock, flags);
 }
 
-#ifdef CONFIG_USB_PWC_DEBUG
+#ifdef CONFIG_BACKPORT_USB_PWC_DEBUG
 static const char *pwc_sensor_type_to_string(unsigned int sensor_type)
 {
 	switch(sensor_type) {
@@ -1044,7 +1044,7 @@ static int usb_pwc_probe(struct usb_interface *intf, const struct usb_device_id 
 		goto err_free_mem;
 	}
 
-#ifdef CONFIG_USB_PWC_DEBUG
+#ifdef CONFIG_BACKPORT_USB_PWC_DEBUG
 	/* Query sensor type */
 	if (pwc_get_cmos_sensor(pdev, &rc) >= 0) {
 		PWC_DEBUG_OPEN("This %s camera is equipped with a %s (%d).\n",
@@ -1091,7 +1091,7 @@ static int usb_pwc_probe(struct usb_interface *intf, const struct usb_device_id 
 	}
 	PWC_INFO("Registered as %s.\n", video_device_node_name(&pdev->vdev));
 
-#ifdef CONFIG_USB_PWC_INPUT_EVDEV
+#ifdef CONFIG_BACKPORT_USB_PWC_INPUT_EVDEV
 	/* register webcam snapshot button input device */
 	pdev->button_dev = input_allocate_device();
 	if (!pdev->button_dev) {
@@ -1119,7 +1119,7 @@ static int usb_pwc_probe(struct usb_interface *intf, const struct usb_device_id 
 
 	return 0;
 
-#ifdef CONFIG_USB_PWC_INPUT_EVDEV
+#ifdef CONFIG_BACKPORT_USB_PWC_INPUT_EVDEV
 err_video_unreg:
 	video_unregister_device(&pdev->vdev);
 #endif
@@ -1151,7 +1151,7 @@ static void usb_pwc_disconnect(struct usb_interface *intf)
 	mutex_unlock(&pdev->v4l2_lock);
 	mutex_unlock(&pdev->vb_queue_lock);
 
-#ifdef CONFIG_USB_PWC_INPUT_EVDEV
+#ifdef CONFIG_BACKPORT_USB_PWC_INPUT_EVDEV
 	if (pdev->button_dev)
 		input_unregister_device(pdev->button_dev);
 #endif
@@ -1166,13 +1166,13 @@ static void usb_pwc_disconnect(struct usb_interface *intf)
 
 static unsigned int leds_nargs;
 
-#ifdef CONFIG_USB_PWC_DEBUG
+#ifdef CONFIG_BACKPORT_USB_PWC_DEBUG
 module_param_named(trace, pwc_trace, int, 0644);
 #endif
 module_param(power_save, int, 0644);
 module_param_array(leds, int, &leds_nargs, 0444);
 
-#ifdef CONFIG_USB_PWC_DEBUG
+#ifdef CONFIG_BACKPORT_USB_PWC_DEBUG
 MODULE_PARM_DESC(trace, "For debugging purposes");
 #endif
 MODULE_PARM_DESC(power_save, "Turn power saving for new cameras on or off");
