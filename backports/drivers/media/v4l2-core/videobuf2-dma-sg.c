@@ -391,6 +391,7 @@ struct vb2_dma_sg_attachment {
 	enum dma_data_direction dma_dir;
 };
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static int vb2_dma_sg_dmabuf_ops_attach(struct dma_buf *dbuf, struct device *dev,
 	struct dma_buf_attachment *dbuf_attach)
 {
@@ -428,7 +429,9 @@ static int vb2_dma_sg_dmabuf_ops_attach(struct dma_buf *dbuf, struct device *dev
 
 	return 0;
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static void vb2_dma_sg_dmabuf_ops_detach(struct dma_buf *dbuf,
 	struct dma_buf_attachment *db_attach)
 {
@@ -448,7 +451,9 @@ static void vb2_dma_sg_dmabuf_ops_detach(struct dma_buf *dbuf,
 	kfree(attach);
 	db_attach->priv = NULL;
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static struct sg_table *vb2_dma_sg_dmabuf_ops_map(
 	struct dma_buf_attachment *db_attach, enum dma_data_direction dma_dir)
 {
@@ -488,39 +493,51 @@ static struct sg_table *vb2_dma_sg_dmabuf_ops_map(
 
 	return sgt;
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static void vb2_dma_sg_dmabuf_ops_unmap(struct dma_buf_attachment *db_attach,
 	struct sg_table *sgt, enum dma_data_direction dma_dir)
 {
 	/* nothing to be done here */
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static void vb2_dma_sg_dmabuf_ops_release(struct dma_buf *dbuf)
 {
 	/* drop reference obtained in vb2_dma_sg_get_dmabuf */
 	vb2_dma_sg_put(dbuf->priv);
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static void *vb2_dma_sg_dmabuf_ops_kmap(struct dma_buf *dbuf, unsigned long pgnum)
 {
 	struct vb2_dma_sg_buf *buf = dbuf->priv;
 
 	return buf->vaddr ? buf->vaddr + pgnum * PAGE_SIZE : NULL;
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static void *vb2_dma_sg_dmabuf_ops_vmap(struct dma_buf *dbuf)
 {
 	struct vb2_dma_sg_buf *buf = dbuf->priv;
 
 	return vb2_dma_sg_vaddr(buf);
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static int vb2_dma_sg_dmabuf_ops_mmap(struct dma_buf *dbuf,
 	struct vm_area_struct *vma)
 {
 	return vb2_dma_sg_mmap(dbuf->priv, vma);
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static struct dma_buf_ops vb2_dma_sg_dmabuf_ops = {
 	.attach = vb2_dma_sg_dmabuf_ops_attach,
 	.detach = vb2_dma_sg_dmabuf_ops_detach,
@@ -532,7 +549,9 @@ static struct dma_buf_ops vb2_dma_sg_dmabuf_ops = {
 	.mmap = vb2_dma_sg_dmabuf_ops_mmap,
 	.release = vb2_dma_sg_dmabuf_ops_release,
 };
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static struct dma_buf *vb2_dma_sg_get_dmabuf(void *buf_priv, unsigned long flags)
 {
 	struct vb2_dma_sg_buf *buf = buf_priv;
@@ -556,11 +575,13 @@ static struct dma_buf *vb2_dma_sg_get_dmabuf(void *buf_priv, unsigned long flags
 
 	return dbuf;
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
 /*********************************************/
 /*       callbacks for DMABUF buffers        */
 /*********************************************/
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static int vb2_dma_sg_map_dmabuf(void *mem_priv)
 {
 	struct vb2_dma_sg_buf *buf = mem_priv;
@@ -588,7 +609,9 @@ static int vb2_dma_sg_map_dmabuf(void *mem_priv)
 
 	return 0;
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static void vb2_dma_sg_unmap_dmabuf(void *mem_priv)
 {
 	struct vb2_dma_sg_buf *buf = mem_priv;
@@ -612,7 +635,9 @@ static void vb2_dma_sg_unmap_dmabuf(void *mem_priv)
 
 	buf->dma_sgt = NULL;
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static void vb2_dma_sg_detach_dmabuf(void *mem_priv)
 {
 	struct vb2_dma_sg_buf *buf = mem_priv;
@@ -625,7 +650,9 @@ static void vb2_dma_sg_detach_dmabuf(void *mem_priv)
 	dma_buf_detach(buf->db_attach->dmabuf, buf->db_attach);
 	kfree(buf);
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 static void *vb2_dma_sg_attach_dmabuf(void *alloc_ctx, struct dma_buf *dbuf,
 	unsigned long size, enum dma_data_direction dma_dir)
 {
@@ -655,6 +682,7 @@ static void *vb2_dma_sg_attach_dmabuf(void *alloc_ctx, struct dma_buf *dbuf,
 
 	return buf;
 }
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 
 static void *vb2_dma_sg_cookie(void *buf_priv)
 {
@@ -673,11 +701,21 @@ const struct vb2_mem_ops vb2_dma_sg_memops = {
 	.vaddr		= vb2_dma_sg_vaddr,
 	.mmap		= vb2_dma_sg_mmap,
 	.num_users	= vb2_dma_sg_num_users,
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.get_dmabuf	= vb2_dma_sg_get_dmabuf,
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.map_dmabuf	= vb2_dma_sg_map_dmabuf,
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.unmap_dmabuf	= vb2_dma_sg_unmap_dmabuf,
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.attach_dmabuf	= vb2_dma_sg_attach_dmabuf,
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
+#if LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0)
 	.detach_dmabuf	= vb2_dma_sg_detach_dmabuf,
+#endif /* LINUX_VERSION_CODE >= KERNEL_VERSION(3,5,0) */
 	.cookie		= vb2_dma_sg_cookie,
 };
 EXPORT_SYMBOL_GPL(vb2_dma_sg_memops);
