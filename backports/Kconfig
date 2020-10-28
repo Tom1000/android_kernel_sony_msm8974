@@ -30,8 +30,8 @@ menuconfig BACKPORT_LINUX
 
 if BACKPORT_LINUX
 
-source "$BACKPORT_DIR/Kconfig.versions"
-source "$BACKPORT_DIR/Kconfig.sources"
-# source "$BACKPORT_DIR/Kconfig.local"
+source "$BACKPORT_DIR/versions/Kconfig"
+source "$BACKPORT_DIR/sources/Kconfig"
+# source "$BACKPORT_DIR/local/Kconfig"
 
 endif # BACKPORT_LINUX
