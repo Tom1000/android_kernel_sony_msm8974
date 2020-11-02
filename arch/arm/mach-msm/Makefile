@@ -329,7 +329,7 @@ else ifdef CONFIG_MACH_SONY_SCORPION_WINDY
 else
 	obj-$(CONFIG_ARCH_MSM8974) += board-8974-gpiomux.o board-sony_shinano-nfc.o bms-batterydata-oem.o
 endif
-obj-$(CONFIG_ARCH_MSM8974) += board-sony_shinano-wifi.o
+#obj-$(CONFIG_ARCH_MSM8974) += board-sony_shinano-wifi.o
 obj-$(CONFIG_ARCH_MSM8974) += board-sony_shinano-hw.o sony_gpiomux.o board-sony_shinano-gpiomux-ref.o
 
 CFLAGS_msm_vibrator.o += -Idrivers/staging/android
