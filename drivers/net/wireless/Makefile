@@ -19,8 +19,6 @@ obj-$(CONFIG_AT76C50X_USB)      += at76c50x-usb.o
 obj-$(CONFIG_PRISM54)		+= prism54/
 
 obj-$(CONFIG_HOSTAP)		+= hostap/
-obj-$(CONFIG_B43)		+= b43/
-obj-$(CONFIG_B43LEGACY)		+= b43legacy/
 obj-$(CONFIG_ZD1211RW)		+= zd1211rw/
 obj-$(CONFIG_RTL8180)		+= rtl818x/
 obj-$(CONFIG_RTL8187)		+= rtl818x/
@@ -58,11 +56,6 @@ obj-$(CONFIG_WL12XX_PLATFORM_DATA)	+= wl12xx/
 obj-$(CONFIG_IWM)	+= iwmc3200wifi/
 
 obj-$(CONFIG_MWIFIEX)	+= mwifiex/
-
-obj-$(CONFIG_BCMDHD)	+= bcmdhd/
-
-obj-$(CONFIG_BRCMFMAC)	+= brcm80211/
-obj-$(CONFIG_BRCMSMAC)	+= brcm80211/
 
 obj-$(CONFIG_LIBRA_SDIOIF)	+= libra/
 obj-$(CONFIG_WCNSS_CORE)	+= wcnss/
