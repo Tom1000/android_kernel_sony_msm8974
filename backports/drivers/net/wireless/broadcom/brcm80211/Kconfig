@@ -25,7 +25,7 @@ source "$BACKPORT_DIR/drivers/net/wireless/broadcom/brcm80211/brcmfmac/Kconfig"
 config BACKPORT_BRCM_TRACING
 	bool "Broadcom device tracing"
 	depends on !BRCM_TRACING
-	depends on BACKPORT_BRCMSMAC || BRCMFMAC
+	depends on BACKPORT_BRCMSMAC || BACKPORT_BRCMFMAC
 	help
 	  If you say Y here, the Broadcom wireless drivers will register
 	  with ftrace to dump event information into the trace ringbuffer.
@@ -37,7 +37,7 @@ config BACKPORT_BRCM_TRACING
 config BACKPORT_BRCMDBG
 	bool "Broadcom driver debug functions"
 	depends on !BRCMDBG
-	depends on BACKPORT_BRCMSMAC || BRCMFMAC
+	depends on BACKPORT_BRCMSMAC || BACKPORT_BRCMFMAC
 	select WANT_DEV_COREDUMP if BACKPORT_BRCMFMAC
 	help
 	  Selecting this enables additional code for debug purposes.
