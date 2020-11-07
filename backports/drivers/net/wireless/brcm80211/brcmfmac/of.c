@@ -13,6 +13,9 @@
  * OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF OR IN
  * CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
  */
+
+#define DEBUG
+
 #include <linux/init.h>
 #include <linux/of.h>
 #include <linux/of_irq.h>
@@ -32,9 +35,11 @@ void brcmf_of_probe(struct brcmf_sdio_dev *sdiodev)
 	u32 irqf;
 	u32 val;
 
+	pr_debug("TTT of.c: brcmf_of_probe starting...");
+
 	if (!np || !of_device_is_compatible(np, "brcm,bcm4329-fmac"))
 		return;
-
+	pr_debug("TTT: brcmf_of_probe brcm,bcm4329-fmac found");
 	sdiodev->pdata = devm_kzalloc(dev, sizeof(*sdiodev->pdata), GFP_KERNEL);
 	if (!sdiodev->pdata)
 		return;
@@ -45,7 +50,7 @@ void brcmf_of_probe(struct brcmf_sdio_dev *sdiodev)
 	/* make sure there are interrupts defined in the node */
 	if (!of_find_property(np, "interrupts", NULL))
 		return;
-
+	pr_debug("TTT: brcmf_of_probe Interrupt found");
 	irq = irq_of_parse_and_map(np, 0);
 	if (!irq) {
 		brcmf_err("interrupt could not be mapped\n");

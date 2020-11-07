@@ -15,6 +15,8 @@
  */
 /* ****************** SDIO CARD Interface Functions **************************/
 
+#define DEBUG
+
 #include <linux/types.h>
 #include <linux/netdevice.h>
 #include <linux/pci.h>
@@ -256,8 +258,11 @@ static int brcmf_sdiod_request_data(struct brcmf_sdio_dev *sdiodev, u8 fn,
 	struct sdio_func *func;
 	int ret;
 
-	brcmf_dbg(SDIO, "rw=%d, func=%d, addr=0x%05x, nbytes=%d\n",
+	/*TTT Disable
+	 *
+	 brcmf_dbg(SDIO, "rw=%d, func=%d, addr=0x%05x, nbytes=%d\n",
 		  write, fn, addr, regsz);
+	*/
 
 	/* only allow byte access on F0 */
 	if (WARN_ON(regsz > 1 && !fn))
@@ -1200,6 +1205,7 @@ static int brcmf_ops_sdio_probe(struct sdio_func *func,
 
 	brcmf_dbg(SDIO, "F2 found, calling brcmf_sdiod_probe...\n");
 	err = brcmf_sdiod_probe(sdiodev);
+
 	if (err) {
 		brcmf_err("F2 error, probe failed %d...\n", err);
 		goto fail;
@@ -1323,6 +1329,7 @@ static struct sdio_driver brcmf_sdmmc_driver = {
 static int __init brcmf_sdio_pd_probe(struct platform_device *pdev)
 {
 	brcmf_dbg(SDIO, "Enter\n");
+	pr_err("TTT: brcmf_sdio_pd_probe Entered\n");
 
 	brcmfmac_sdio_pdata = dev_get_platdata(&pdev->dev);
 
@@ -1358,6 +1365,7 @@ void brcmf_sdio_register(void)
 	ret = sdio_register_driver(&brcmf_sdmmc_driver);
 	if (ret)
 		brcmf_err("sdio_register_driver failed: %d\n", ret);
+	pr_debug("TTT: brcmf_sdio_register result: %d\n", ret);
 }
 
 void brcmf_sdio_exit(void)
@@ -1375,8 +1383,11 @@ void __init brcmf_sdio_init(void)
 	int ret;
 
 	brcmf_dbg(SDIO, "Enter\n");
+	pr_debug("TTT: brcmf_sdio_init");
 
 	ret = platform_driver_probe(&brcmf_sdio_pd, brcmf_sdio_pd_probe);
 	if (ret == -ENODEV)
 		brcmf_dbg(SDIO, "No platform data available.\n");
+
+	pr_err("TTT: brcmf_sdio_init result: %d\n", ret);
 }

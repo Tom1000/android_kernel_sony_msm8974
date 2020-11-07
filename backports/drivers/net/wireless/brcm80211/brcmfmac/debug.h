@@ -47,6 +47,8 @@
  * debugging is not selected. When debugging the driver error
  * messages are as important as other tracing or even more so.
  */
+
+/*
 #ifndef CONFIG_BACKPORT_BRCM_TRACING
 #ifdef CONFIG_BACKPORT_BRCMDBG
 #define brcmf_err(fmt, ...)	pr_err("%s: " fmt, __func__, ##__VA_ARGS__)
@@ -81,9 +83,11 @@ do {								\
 #define BRCMF_FIL_ON()		(brcmf_msg_level & BRCMF_FIL_VAL)
 #define BRCMF_FWCON_ON()	(brcmf_msg_level & BRCMF_FWCON_VAL)
 
-#else /* defined(DEBUG) || defined(CONFIG_BACKPORT_BRCM_TRACING) */
-
-#define brcmf_dbg(level, fmt, ...) no_printk(fmt, ##__VA_ARGS__)
+#else
+*/
+#define DEBUG
+#define brcmf_err(fmt, ...)	pr_err("%s: " fmt, __func__, ##__VA_ARGS__)
+#define brcmf_dbg(level, fmt, ...) pr_debug("%s: " fmt, __func__, ##__VA_ARGS__)
 
 #define BRCMF_DATA_ON()		0
 #define BRCMF_CTL_ON()		0
@@ -94,7 +98,8 @@ do {								\
 #define BRCMF_FIL_ON()		0
 #define BRCMF_FWCON_ON()	0
 
-#endif /* defined(DEBUG) || defined(CONFIG_BACKPORT_BRCM_TRACING) */
+/*
+#endif */
 
 #define brcmf_dbg_hex_dump(test, data, len, fmt, ...)			\
 do {									\
