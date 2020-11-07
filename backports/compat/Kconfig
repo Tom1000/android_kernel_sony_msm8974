@@ -136,9 +136,14 @@ config BACKPORT_BPAUTO_BUILD_CRYPTO_CCM
 	default y if BACKPORT_BPAUTO_CRYPTO_CCM
 	#c-file crypto/ccm.c
 
+config WANT_DEV_COREDUMP
+	bool
+	default n
+	
 config BACKPORT_BPAUTO_WANT_DEV_COREDUMP
 	bool
 	depends on !BPAUTO_WANT_DEV_COREDUMP
+	default y if WANT_DEV_COREDUMP
 
 config BACKPORT_BPAUTO_BUILD_WANT_DEV_COREDUMP
 	bool
