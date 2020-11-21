@@ -4,7 +4,9 @@
 #
 # Copyright (c) 2011 Broadcom Corporation
 #
-ccflags-y := -I $(src)/../include
+ccflags-y := \
+	-I$(backport_srctree)/drivers/net/wireless/broadcom/brcm80211/brcmfmac   \
+    -I$(backport_srctree)/drivers/net/wireless/broadcom/brcm80211/include
 
 obj-$(CONFIG_BACKPORT_BRCMUTIL)	+= brcmutil.o
 brcmutil-objs	= utils.o d11.o
