@@ -12,6 +12,6 @@ config WLAN_VENDOR_ST
 
 if WLAN_VENDOR_ST
 
-source "drivers/net/wireless/st/cw1200/Kconfig"
+source "$BACKPORT_DIR/drivers/net/wireless/st/cw1200/Kconfig"
 
 endif # WLAN_VENDOR_ST

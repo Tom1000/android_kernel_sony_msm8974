@@ -12,6 +12,6 @@ config WLAN_VENDOR_QUANTENNA
 
 if WLAN_VENDOR_QUANTENNA
 
-source "drivers/net/wireless/quantenna/qtnfmac/Kconfig"
+source "$BACKPORT_DIR/drivers/net/wireless/quantenna/qtnfmac/Kconfig"
 
 endif # WLAN_VENDOR_QUANTENNA

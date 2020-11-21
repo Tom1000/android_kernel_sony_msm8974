@@ -18,7 +18,7 @@ config BRCMSMAC
 	  be available if you select BCMA_DRIVER_GPIO. If you choose to build a
 	  module, the driver will be called brcmsmac.ko.
 
-source "drivers/net/wireless/broadcom/brcm80211/brcmfmac/Kconfig"
+source "$BACKPORT_DIR/drivers/net/wireless/broadcom/brcm80211/brcmfmac/Kconfig"
 
 config BRCM_TRACING
 	bool "Broadcom device tracing"
