@@ -3210,7 +3210,7 @@ static int mac80211_hwsim_new_radio(struct genl_info *info,
 	if (err < 0) {
 		if (info) {
 			GENL_SET_ERR_MSG(info, "perm addr already present");
-			NL_SET_BAD_ATTR(info->extack,
+			NL_SET_BAD_ATTR(genl_info_extack(info),
 					info->attrs[HWSIM_ATTR_PERM_ADDR]);
 		}
 		spin_unlock_bh(&hwsim_radio_lock);
@@ -3678,7 +3678,7 @@ static int hwsim_new_radio_nl(struct sk_buff *msg, struct genl_info *info)
 		if (!is_valid_ether_addr(
 				nla_data(info->attrs[HWSIM_ATTR_PERM_ADDR]))) {
 			GENL_SET_ERR_MSG(info,"MAC is no valid source addr");
-			NL_SET_BAD_ATTR(info->extack,
+			NL_SET_BAD_ATTR(genl_info_extack(info),
 					info->attrs[HWSIM_ATTR_PERM_ADDR]);
 			return -EINVAL;
 		}
@@ -3691,7 +3691,7 @@ static int hwsim_new_radio_nl(struct sk_buff *msg, struct genl_info *info)
 			nla_get_u32(info->attrs[HWSIM_ATTR_IFTYPE_SUPPORT]);
 
 		if (param.iftypes & ~HWSIM_IFTYPE_SUPPORT_MASK) {
-			NL_SET_ERR_MSG_ATTR(info->extack,
+			NL_SET_ERR_MSG_ATTR(genl_info_extack(info),
 					    info->attrs[HWSIM_ATTR_IFTYPE_SUPPORT],
 					    "cannot support more iftypes than kernel");
 			return -EINVAL;
@@ -3714,7 +3714,7 @@ static int hwsim_new_radio_nl(struct sk_buff *msg, struct genl_info *info)
 			nla_data(info->attrs[HWSIM_ATTR_CIPHER_SUPPORT]);
 
 		if (len % sizeof(u32)) {
-			NL_SET_ERR_MSG_ATTR(info->extack,
+			NL_SET_ERR_MSG_ATTR(genl_info_extack(info),
 					    info->attrs[HWSIM_ATTR_CIPHER_SUPPORT],
 					    "bad cipher list length");
 			return -EINVAL;
@@ -3723,14 +3723,14 @@ static int hwsim_new_radio_nl(struct sk_buff *msg, struct genl_info *info)
 		param.n_ciphers = len / sizeof(u32);
 
 		if (param.n_ciphers > ARRAY_SIZE(hwsim_ciphers)) {
-			NL_SET_ERR_MSG_ATTR(info->extack,
+			NL_SET_ERR_MSG_ATTR(genl_info_extack(info),
 					    info->attrs[HWSIM_ATTR_CIPHER_SUPPORT],
 					    "too many ciphers specified");
 			return -EINVAL;
 		}
 
 		if (!hwsim_known_ciphers(param.ciphers, param.n_ciphers)) {
-			NL_SET_ERR_MSG_ATTR(info->extack,
+			NL_SET_ERR_MSG_ATTR(genl_info_extack(info),
 					    info->attrs[HWSIM_ATTR_CIPHER_SUPPORT],
 					    "unsupported ciphers specified");
 			return -EINVAL;
