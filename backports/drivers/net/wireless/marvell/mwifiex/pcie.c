@@ -316,6 +316,7 @@ static void mwifiex_pcie_shutdown(struct pci_dev *pdev)
 	return;
 }
 
+#if LINUX_VERSION_IS_GEQ(4,17,0)
 static void mwifiex_pcie_coredump(struct device *dev)
 {
 	struct pci_dev *pdev;
@@ -328,6 +329,7 @@ static void mwifiex_pcie_coredump(struct device *dev)
 			      &card->work_flags))
 		schedule_work(&card->work);
 }
+#endif
 
 static const struct pci_device_id mwifiex_ids[] = {
 	{
@@ -443,7 +445,9 @@ static struct pci_driver __refdata mwifiex_pcie = {
 	.probe    = mwifiex_pcie_probe,
 	.remove   = mwifiex_pcie_remove,
 	.driver   = {
+#if LINUX_VERSION_IS_GEQ(4,17,0)
 		.coredump = mwifiex_pcie_coredump,
+#endif
 #ifdef CONFIG_PM_SLEEP
 		.pm = &mwifiex_pcie_pm_ops,
 #endif
