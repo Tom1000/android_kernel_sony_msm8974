@@ -1169,7 +1169,7 @@ ieee80211_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats)
 		u64 rx_packets, rx_bytes, tx_packets, tx_bytes;
 		unsigned int start;
 
-		tstats = per_cpu_ptr(dev->tstats, i);
+		tstats = per_cpu_ptr(netdev_tstats(dev), i);
 
 		do {
 			start = u64_stats_fetch_begin_irq(&tstats->syncp);
@@ -1317,7 +1317,7 @@ EXPORT_SYMBOL(ieee80211_set_hw_80211_encap);
 
 static void ieee80211_if_free(struct net_device *dev)
 {
-	free_percpu(dev->tstats);
+	free_percpu(netdev_tstats(dev));
 }
 
 static void ieee80211_if_setup(struct net_device *dev)
@@ -1889,8 +1889,9 @@ int ieee80211_if_add(struct ieee80211_local *local, const char *name,
 
 		dev_net_set(ndev, wiphy_net(local->hw.wiphy));
 
-		ndev->tstats = netdev_alloc_pcpu_stats(struct pcpu_sw_netstats);
-		if (!ndev->tstats) {
+		netdev_assign_tstats(ndev,
+				     netdev_alloc_pcpu_stats(struct pcpu_sw_netstats));
+		if (!netdev_tstats(ndev)) {
 			free_netdev(ndev);
 			return -ENOMEM;
 		}
