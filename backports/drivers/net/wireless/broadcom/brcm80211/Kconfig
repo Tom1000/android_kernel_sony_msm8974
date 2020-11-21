@@ -12,8 +12,8 @@ config BACKPORT_BRCMSMAC
 	select NEW_LEDS if BACKPORT_BCMA_DRIVER_GPIO
 	select LEDS_CLASS if BACKPORT_BCMA_DRIVER_GPIO
 	select BACKPORT_BRCMUTIL
-	select FW_LOADER
-	select CORDIC
+	depends on FW_LOADER
+	depends on CORDIC
 	help
 	  This module adds support for PCIe wireless adapters based on Broadcom
 	  IEEE802.11n SoftMAC chipsets. It also has BACKPORT_WLAN led support, which will

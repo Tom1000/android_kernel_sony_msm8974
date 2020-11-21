@@ -17,8 +17,8 @@ config BACKPORT_ADM8211
 	tristate "ADMtek ADM8211 support"
 	depends on !ADM8211
 	depends on BACKPORT_MAC80211 && PCI
-	select CRC32
-	select EEPROM_93CX6
+	depends on CRC32
+	depends on EEPROM_93CX6
 	help
 	  This driver is for BACKPORT_ADM8211A, BACKPORT_ADM8211B, and BACKPORT_ADM8211C based cards.
 	  These are PCI/mini-PCI/Cardbus 802.11b chips found in cards such as:

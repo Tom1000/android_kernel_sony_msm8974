@@ -131,7 +131,7 @@ config BACKPORT_RTL8192CU
 config BACKPORT_RTLWIFI
 	tristate
 	depends on !RTLWIFI
-	select FW_LOADER
+	depends on FW_LOADER
 
 config BACKPORT_RTLWIFI_PCI
 	tristate

@@ -29,8 +29,8 @@ config BACKPORT_ATH9K
 	depends on BACKPORT_MAC80211 && HAS_DMA
 	select BACKPORT_ATH9K_HW
 	select BACKPORT_MAC80211_LEDS
-	select LEDS_CLASS
-	select NEW_LEDS
+	depends on LEDS_CLASS
+	depends on NEW_LEDS
 	select BACKPORT_ATH9K_COMMON
 	help
 	  This module adds support for wireless adapters based on
@@ -197,8 +197,8 @@ config BACKPORT_ATH9K_HTC
 	depends on USB && BACKPORT_MAC80211
 	select BACKPORT_ATH9K_HW
 	select BACKPORT_MAC80211_LEDS
-	select LEDS_CLASS
-	select NEW_LEDS
+	depends on LEDS_CLASS
+	depends on NEW_LEDS
 	select BACKPORT_ATH9K_COMMON
 	help
 	  Support for Atheros HTC based cards.
@@ -233,7 +233,7 @@ config BACKPORT_ATH9K_COMMON_SPECTRAL
 	bool "Atheros ath9k/ath9k_htc spectral scan support"
 	depends on !ATH9K_COMMON_SPECTRAL
 	depends on BACKPORT_ATH9K_DEBUGFS || BACKPORT_ATH9K_HTC_DEBUGFS
-	select RELAY
+	depends on RELAY
 	default n
 	help
 	  Say Y to enable access to the FFT/spectral data via debugfs.

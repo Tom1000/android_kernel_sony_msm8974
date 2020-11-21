@@ -3,7 +3,7 @@ config BACKPORT_IWLWIFI
 	tristate "Intel Wireless WiFi Next Gen AGN - Wireless-N/Advanced-N/Ultimate-N (iwlwifi) "
 	depends on !IWLWIFI
 	depends on PCI && HAS_IOMEM && BACKPORT_CFG80211
-	select FW_LOADER
+	depends on FW_LOADER
 	help
 	  Select to build the driver supporting the:
 
@@ -51,7 +51,7 @@ config BACKPORT_IWLWIFI_LEDS
 	depends on !IWLWIFI_LEDS
 	depends on LEDS_CLASS=y || LEDS_CLASS=IWLWIFI
 	depends on IWLMVM || BACKPORT_IWLDVM
-	select LEDS_TRIGGERS
+	depends on LEDS_TRIGGERS
 	select BACKPORT_MAC80211_LEDS
 	default y
 
@@ -67,7 +67,7 @@ config BACKPORT_IWLDVM
 config BACKPORT_IWLMVM
 	tristate "Intel Wireless WiFi MVM Firmware support"
 	depends on !IWLMVM
-	select WANT_DEV_COREDUMP
+	depends on WANT_DEV_COREDUMP
 	depends on BACKPORT_MAC80211
 	help
 	  This is the driver that supports the MVM firmware. The list

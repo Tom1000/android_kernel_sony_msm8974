@@ -23,7 +23,7 @@ config BACKPORT_BRCMFMAC_SDIO
 	depends on (MMC = y || MMC = BACKPORT_BRCMFMAC)
 	depends on BACKPORT_BRCMFMAC
 	select BACKPORT_BRCMFMAC_PROTO_BCDC
-	select FW_LOADER
+	depends on FW_LOADER
 	default y
 	help
 	  This option enables the SDIO bus interface support for Broadcom
@@ -36,7 +36,7 @@ config BACKPORT_BRCMFMAC_USB
 	depends on (USB = y || USB = BACKPORT_BRCMFMAC)
 	depends on BACKPORT_BRCMFMAC
 	select BACKPORT_BRCMFMAC_PROTO_BCDC
-	select FW_LOADER
+	depends on FW_LOADER
 	help
 	  This option enables the USB bus interface support for Broadcom
 	  IEEE802.11n embedded FullMAC BACKPORT_WLAN driver. Say Y if you want to
@@ -48,7 +48,7 @@ config BACKPORT_BRCMFMAC_PCIE
 	depends on BACKPORT_BRCMFMAC
 	depends on PCI
 	select BACKPORT_BRCMFMAC_PROTO_MSGBUF
-	select FW_LOADER
+	depends on FW_LOADER
 	help
 	  This option enables the PCIE bus interface support for Broadcom
 	  IEEE802.11ac embedded FullMAC BACKPORT_WLAN driver. Say Y if you want to

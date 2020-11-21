@@ -8,7 +8,7 @@ menuconfig BACKPORT_WLAN
 	depends on !WLAN
 	depends on !S390
 	depends on NET
-	select WIRELESS
+	depends on WIRELESS
 	default y
 	help
 	  This section contains all the pre 802.11 and 802.11 wireless
@@ -54,9 +54,9 @@ config BACKPORT_PCMCIA_RAYCS
 	tristate "Aviator/Raytheon 2.4GHz wireless support"
 	depends on !PCMCIA_RAYCS
 	depends on PCMCIA
-	select WIRELESS_EXT
-	select WEXT_SPY
-	select WEXT_PRIV
+	depends on WIRELESS_EXT
+	depends on WEXT_SPY
+	depends on WEXT_PRIV
 	help
 	  Say Y here if you intend to attach an Aviator/Raytheon PCMCIA
 	  (PC-card) wireless Ethernet networking card to your computer.
@@ -70,8 +70,8 @@ config BACKPORT_PCMCIA_WL3501
 	tristate "Planet WL3501 PCMCIA cards"
 	depends on !PCMCIA_WL3501
 	depends on BACKPORT_CFG80211 && PCMCIA
-	select WIRELESS_EXT
-	select WEXT_SPY
+	depends on WIRELESS_EXT
+	depends on WEXT_SPY
 	help
 	  A driver for WL3501 PCMCIA 802.11 wireless cards made by Planet.
 	  It has basic support for Linux wireless extensions and initial

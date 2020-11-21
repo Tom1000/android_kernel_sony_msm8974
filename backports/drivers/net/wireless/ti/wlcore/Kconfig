@@ -3,7 +3,7 @@ config BACKPORT_WLCORE
 	tristate "TI wlcore support"
 	depends on !WLCORE
 	depends on BACKPORT_MAC80211
-	select FW_LOADER
+	depends on FW_LOADER
 	help
 	  This module contains the main code for TI BACKPORT_WLAN chips.  It abstracts
 	  hardware-specific differences among different chipset families.
@@ -17,7 +17,7 @@ config BACKPORT_WLCORE_SPI
 	tristate "TI wlcore SPI support"
 	depends on !WLCORE_SPI
 	depends on BACKPORT_WLCORE && SPI_MASTER && OF
-	select CRC7
+	depends on CRC7
 	help
 	  This module adds support for the SPI interface of adapters using
 	  TI BACKPORT_WLAN chipsets.  Select this if your platform is using

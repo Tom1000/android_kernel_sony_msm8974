@@ -17,10 +17,10 @@ config BACKPORT_ATMEL
 	tristate "Atmel at76c50x chipset  802.11b support"
 	depends on !ATMEL
 	depends on BACKPORT_CFG80211 && (PCI || PCMCIA)
-	select WIRELESS_EXT
-	select WEXT_PRIV
-	select FW_LOADER
-	select CRC32
+	depends on WIRELESS_EXT
+	depends on WEXT_PRIV
+	depends on FW_LOADER
+	depends on CRC32
 	help
 	  A driver 802.11b wireless cards based on the Atmel fast-vnet
 	  chips. This driver supports standard Linux wireless extensions.
@@ -44,9 +44,9 @@ config BACKPORT_PCMCIA_ATMEL
 	tristate "Atmel at76c502/at76c504 PCMCIA cards"
 	depends on !PCMCIA_ATMEL
 	depends on BACKPORT_ATMEL && PCMCIA
-	select WIRELESS_EXT
-	select FW_LOADER
-	select CRC32
+	depends on WIRELESS_EXT
+	depends on FW_LOADER
+	depends on CRC32
 	help
 	  Enable support for PCMCIA cards containing the
 	  Atmel at76c502 and at76c504 chips.
@@ -55,7 +55,7 @@ config BACKPORT_AT76C50X_USB
 	tristate "Atmel at76c503/at76c505/at76c505a USB cards"
 	depends on !AT76C50X_USB
 	depends on BACKPORT_MAC80211 && USB
-	select FW_LOADER
+	depends on FW_LOADER
 	help
 	  Enable support for USB Wireless devices using Atmel at76c503,
 	  at76c505 or at76c505a chips.

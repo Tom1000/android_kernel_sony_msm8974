@@ -24,7 +24,7 @@ config BACKPORT_MT7622_WMAC
 	depends on !MT7622_WMAC
 	depends on BACKPORT_MT7615E
 	depends on ARCH_MEDIATEK || COMPILE_TEST
-	select REGMAP
+	depends on REGMAP
 	default y
 	help
 	  This adds support for the built-in WMAC on MT7622 SoC devices

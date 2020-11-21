@@ -7,7 +7,7 @@ config BACKPORT_ATH11K
 	depends on CRYPTO_MICHAEL_MIC
 	depends on ARCH_QCOM || COMPILE_TEST
 	select BACKPORT_ATH_COMMON
-	select QCOM_QMI_HELPERS
+	depends on QCOM_QMI_HELPERS
 	help
 	  This module adds support for Qualcomm Technologies 802.11ax family of
 	  chipsets.
