@@ -81,6 +81,7 @@ GRTAGS
 GSYMS
 GTAGS
 
+defconfig
 *.orig
 *~
 \#*#
