@@ -15,6 +15,7 @@
 #include "tx.h"
 #include "debug.h"
 #include "bf.h"
+#include <linux/module.h>
 
 unsigned int rtw_fw_lps_deep_mode;
 EXPORT_SYMBOL(rtw_fw_lps_deep_mode);
