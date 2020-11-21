@@ -51,6 +51,7 @@ source "$BACKPORT_DIR/drivers/net/wireless/zydas/Kconfig"
 source "$BACKPORT_DIR/drivers/net/wireless/quantenna/Kconfig"
 
 config BACKPORT_PCMCIA_RAYCS
+	depends on n
 	tristate "Aviator/Raytheon 2.4GHz wireless support"
 	depends on !PCMCIA_RAYCS
 	depends on PCMCIA
@@ -67,6 +68,7 @@ config BACKPORT_PCMCIA_RAYCS
 	  called ray_cs.  If unsure, say N.
 
 config BACKPORT_PCMCIA_WL3501
+	depends on n
 	tristate "Planet WL3501 PCMCIA cards"
 	depends on !PCMCIA_WL3501
 	depends on BACKPORT_CFG80211 && PCMCIA
@@ -122,6 +124,7 @@ config BACKPORT_USB_NET_RNDIS_WLAN
 	  If you choose to build a module, it'll be called rndis_wlan.
 
 config BACKPORT_VIRT_WIFI
+	depends on n
 	tristate "Wifi wrapper for ethernet drivers"
 	depends on !VIRT_WIFI
 	depends on BACKPORT_CFG80211
