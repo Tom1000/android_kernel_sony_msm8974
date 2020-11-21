@@ -326,7 +326,7 @@
 	};
 
 	/* GPIO_17: WL_SLEEP_CLK */
-	gpio@d000 {
+	wlan_sleep_clk_pin: gpio@d000 {
 		qcom,src-sel = <3>;		/* Alternate function 2 */
 		qcom,mode = <1>;		/* Out */
 		qcom,output-type = <0>;		/* CMOS */
@@ -338,7 +338,7 @@
 	};
 
 	/* GPIO_18: WL_REG_ON */
-	gpio@d100 {
+	wlan_regulator_pin: gpio@d100 {
 		qcom,src-sel = <0>;		/* GPIO */
 		qcom,mode = <1>;		/* Out */
 		qcom,output-type = <0>;		/* CMOS */
