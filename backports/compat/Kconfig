@@ -29,7 +29,7 @@
 #	default m if BPAUTO_FOO
 #
 #	# or for build-testing (BPAUTO_USERSEL_BUILD_ALL is enabled)
-#	default m if BPAUTO_USERSEL_BUILD_ALL
+#	default m if BACKPORT_BPAUTO_USERSEL_BUILD_ALL
 #
 # config BPAUTO_FOO
 #	bool
@@ -53,8 +53,9 @@
 # Variations are obviously possible.
 #
 
-config BP_MODULES
+config BACKPORT_BP_MODULES
 	option modules
+	depends on !BP_MODULES
 	bool
 	default MODULES
 
@@ -62,44 +63,53 @@ config BP_MODULES
 	This symbol is necessary for the newer kconf tool, it looks
 	for the "option modules" to control the 'm' state.
 
-config BPAUTO_BUILD_NLATTR
+config BACKPORT_BPAUTO_BUILD_NLATTR
 	def_bool y
+	depends on !BPAUTO_BUILD_NLATTR
 	depends on KERNEL_5_2
 	#c-file lib/nlattr.c
 
-config BPAUTO_BUILD_CORDIC
+config BACKPORT_BPAUTO_BUILD_CORDIC
 	tristate
+	depends on !BPAUTO_BUILD_CORDIC
 	depends on !CORDIC
 	depends on KERNEL_3_1
-	default m if BPAUTO_CORDIC
-	default m if BPAUTO_USERSEL_BUILD_ALL
+	default m if BACKPORT_BPAUTO_CORDIC
+	default m if BACKPORT_BPAUTO_USERSEL_BUILD_ALL
 	#module-name cordic
 	#c-file lib/math/cordic.c
 
-config BPAUTO_CORDIC
+config BACKPORT_BPAUTO_CORDIC
 	bool
+	depends on !BPAUTO_CORDIC
 
-config BPAUTO_MII
+config BACKPORT_BPAUTO_MII
 	bool
+	depends on !BPAUTO_MII
 
-config BPAUTO_BUILD_LEDS
+config BACKPORT_BPAUTO_BUILD_LEDS
 	bool
+	depends on !BPAUTO_BUILD_LEDS
 	depends on !NEW_LEDS || LEDS_CLASS=n || !LEDS_TRIGGERS
-	default y if BPAUTO_NEW_LEDS
-	default y if BPAUTO_LEDS_CLASS
-	default y if BPAUTO_LEDS_TRIGGERS
+	default y if BACKPORT_BPAUTO_NEW_LEDS
+	default y if BACKPORT_BPAUTO_LEDS_CLASS
+	default y if BACKPORT_BPAUTO_LEDS_TRIGGERS
 
-config BPAUTO_NEW_LEDS
+config BACKPORT_BPAUTO_NEW_LEDS
 	bool
+	depends on !BPAUTO_NEW_LEDS
 
-config BPAUTO_LEDS_CLASS
+config BACKPORT_BPAUTO_LEDS_CLASS
 	bool
+	depends on !BPAUTO_LEDS_CLASS
 
-config BPAUTO_LEDS_TRIGGERS
+config BACKPORT_BPAUTO_LEDS_TRIGGERS
 	bool
+	depends on !BPAUTO_LEDS_TRIGGERS
 
-config BPAUTO_USERSEL_BUILD_ALL
+config BACKPORT_BPAUTO_USERSEL_BUILD_ALL
 	bool "Build all compat code"
+	depends on !BPAUTO_USERSEL_BUILD_ALL
 	help
 	  This option selects all the compat code options
 	  that would otherwise only be selected by drivers.
@@ -107,19 +117,22 @@ config BPAUTO_USERSEL_BUILD_ALL
 	  It's only really useful for compat testing, so
 	  you probably shouldn't enable it.
 
-config BPAUTO_WANT_DEV_COREDUMP
+config BACKPORT_BPAUTO_WANT_DEV_COREDUMP
 	bool
+	depends on !BPAUTO_WANT_DEV_COREDUMP
 
-config BPAUTO_BUILD_WANT_DEV_COREDUMP
+config BACKPORT_BPAUTO_BUILD_WANT_DEV_COREDUMP
 	bool
+	depends on !BPAUTO_BUILD_WANT_DEV_COREDUMP
 	default n if DEV_COREDUMP
 	default n if DISABLE_DEV_COREDUMP
-	default y if BPAUTO_WANT_DEV_COREDUMP
+	default y if BACKPORT_BPAUTO_WANT_DEV_COREDUMP
 	#h-file linux/devcoredump.h
 	#c-file drivers/base/devcoredump.c
 
-config BPAUTO_RHASHTABLE
+config BACKPORT_BPAUTO_RHASHTABLE
 	bool
+	depends on !BPAUTO_RHASHTABLE
 	# current API of rhashtable was introduced in version 4.9
 	# (the one including rhltable)
 	depends on KERNEL_4_9
@@ -129,53 +142,62 @@ config BPAUTO_RHASHTABLE
 	#h-file linux/rhashtable-types.h
 	#c-file lib/rhashtable.c
 
-config BPAUTO_BUCKET_LOCKS
+config BACKPORT_BPAUTO_BUCKET_LOCKS
 	bool
+	depends on !BPAUTO_BUCKET_LOCKS
 	# the API of bucket_locks that we need was introduced in version 4.16
 	depends on KERNEL_4_16
-	default y if BPAUTO_RHASHTABLE
+	default y if BACKPORT_BPAUTO_RHASHTABLE
 	#c-file lib/bucket_locks.c
 
-config BPAUTO_REFCOUNT
+config BACKPORT_BPAUTO_REFCOUNT
 	bool
+	depends on !BPAUTO_REFCOUNT
 	default y
 	depends on KERNEL_4_11
 	#h-file linux/refcount.h
 	#c-file lib/refcount.c
 
-config BPAUTO_SYSTEM_DATA_VERIFICATION
+config BACKPORT_BPAUTO_SYSTEM_DATA_VERIFICATION
 	bool
+	depends on !BPAUTO_SYSTEM_DATA_VERIFICATION
 
-config BPAUTO_BUILD_SYSTEM_DATA_VERIFICATION
+config BACKPORT_BPAUTO_BUILD_SYSTEM_DATA_VERIFICATION
 	bool
-	default y if BPAUTO_SYSTEM_DATA_VERIFICATION
+	depends on !BPAUTO_BUILD_SYSTEM_DATA_VERIFICATION
+	default y if BACKPORT_BPAUTO_SYSTEM_DATA_VERIFICATION
 	depends on (KERNEL_4_7 || !SYSTEM_DATA_VERIFICATION) && CRYPTO_HASH_INFO
 	depends on !KERNEL_3_13
-	select BPAUTO_ASN1_DECODER
-	select BPAUTO_PUBLIC_KEY
-	select BPAUTO_PKCS7
+	select BACKPORT_BPAUTO_ASN1_DECODER
+	select BACKPORT_BPAUTO_PUBLIC_KEY
+	select BACKPORT_BPAUTO_PKCS7
 	#h-file linux/oid_registry.h
 	#c-file lib/oid_registry.c
 
-config BPAUTO_PUBLIC_KEY
+config BACKPORT_BPAUTO_PUBLIC_KEY
 	bool
+	depends on !BPAUTO_PUBLIC_KEY
 	#h-file crypto/public_key.h
 
-config BPAUTO_ASN1_DECODER
+config BACKPORT_BPAUTO_ASN1_DECODER
 	bool
+	depends on !BPAUTO_ASN1_DECODER
 	#h-file linux/asn1_decoder.h
 	#c-file lib/asn1_decoder.c
 
-config BPAUTO_PKCS7
+config BACKPORT_BPAUTO_PKCS7
 	bool
+	depends on !BPAUTO_PKCS7
 	#h-file crypto/pkcs7.h
 
-config BPAUTO_CRYPTO_LIB_ARC4
+config BACKPORT_BPAUTO_CRYPTO_LIB_ARC4
 	bool
+	depends on !BPAUTO_CRYPTO_LIB_ARC4
 
-config BPAUTO_BUILD_CRYPTO_LIB_ARC4
+config BACKPORT_BPAUTO_BUILD_CRYPTO_LIB_ARC4
 	bool
-	default y if BPAUTO_CRYPTO_LIB_ARC4
+	depends on !BPAUTO_BUILD_CRYPTO_LIB_ARC4
+	default y if BACKPORT_BPAUTO_CRYPTO_LIB_ARC4
 	depends on !(CRYPTO_LIB_ARC4=y || CRYPTO_LIB_ARC4=m)
 	#h-file crypto/arc4.h
 	#c-file lib/crypto/arc4.c

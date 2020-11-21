@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
-config WLAN_VENDOR_CISCO
+config BACKPORT_WLAN_VENDOR_CISCO
 	bool "Cisco devices"
+	depends on !WLAN_VENDOR_CISCO
 	default y
 	help
 	  If you have a wireless card belonging to this class, say Y.
@@ -10,11 +11,12 @@ config WLAN_VENDOR_CISCO
 	  questions about these cards. If you say Y, you will be asked for
 	  your specific card in the following questions.
 
-if WLAN_VENDOR_CISCO
+if BACKPORT_WLAN_VENDOR_CISCO
 
-config AIRO
+config BACKPORT_AIRO
 	tristate "Cisco/Aironet 34X/35X/4500/4800 ISA and PCI cards"
-	depends on CFG80211 && ISA_DMA_API && (PCI || BROKEN)
+	depends on !AIRO
+	depends on BACKPORT_CFG80211 && ISA_DMA_API && (PCI || BROKEN)
 	select WIRELESS_EXT
 	select CRYPTO
 	select CRYPTO_SKCIPHER
@@ -33,9 +35,10 @@ config AIRO
 
 	  The driver can be compiled as a module and will be named "airo".
 
-config AIRO_CS
+config BACKPORT_AIRO_CS
 	tristate "Cisco/Aironet 34X/35X/4500/4800 PCMCIA cards"
-	depends on CFG80211 && PCMCIA
+	depends on !AIRO_CS
+	depends on BACKPORT_CFG80211 && PCMCIA
 	select WIRELESS_EXT
 	select WEXT_SPY
 	select WEXT_PRIV
@@ -56,4 +59,4 @@ config AIRO_CS
 	  and Cisco proprietary API, so both the Linux Wireless Tools and the
 	  Cisco Linux utilities can be used to configure the card.
 
-endif # WLAN_VENDOR_CISCO
+endif # BACKPORT_WLAN_VENDOR_CISCO

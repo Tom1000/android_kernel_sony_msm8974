@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
-config WLAN_VENDOR_INTERSIL
+config BACKPORT_WLAN_VENDOR_INTERSIL
 	bool "Intersil devices"
+	depends on !WLAN_VENDOR_INTERSIL
 	default y
 	help
 	  If you have a wireless card belonging to this class, say Y.
@@ -10,14 +11,15 @@ config WLAN_VENDOR_INTERSIL
 	  questions about these cards. If you say Y, you will be asked for
 	  your specific card in the following questions.
 
-if WLAN_VENDOR_INTERSIL
+if BACKPORT_WLAN_VENDOR_INTERSIL
 
 source "$BACKPORT_DIR/drivers/net/wireless/intersil/hostap/Kconfig"
 source "$BACKPORT_DIR/drivers/net/wireless/intersil/orinoco/Kconfig"
 source "$BACKPORT_DIR/drivers/net/wireless/intersil/p54/Kconfig"
 
-config PRISM54
+config BACKPORT_PRISM54
 	tristate 'Intersil Prism GT/Duette/Indigo PCI/Cardbus (DEPRECATED)'
+	depends on !PRISM54
 	depends on PCI
 	select WIRELESS_EXT
 	select WEXT_SPY
@@ -36,4 +38,4 @@ config PRISM54
 
 	  When built as module you get the module prism54
 
-endif # WLAN_VENDOR_INTERSIL
+endif # BACKPORT_WLAN_VENDOR_INTERSIL

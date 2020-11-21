@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0
-menuconfig STAGING
+menuconfig BACKPORT_STAGING
 	bool "Staging drivers"
+	depends on !STAGING
 	help
 	  This option allows you to select a number of drivers that are
 	  not of the "normal" Linux kernel quality level.  These drivers
@@ -22,7 +23,7 @@ menuconfig STAGING
 	  If in doubt, say N here.
 
 
-if STAGING
+if BACKPORT_STAGING
 
 #source "drivers/staging/wlan-ng/Kconfig"
 
@@ -120,4 +121,4 @@ source "$BACKPORT_DIR/drivers/staging/rtl8188eu/Kconfig"
 
 #source "drivers/staging/wfx/Kconfig"
 
-endif # STAGING
+endif # BACKPORT_STAGING

@@ -1,15 +1,17 @@
 # SPDX-License-Identifier: GPL-2.0-only
-config QTNFMAC
+config BACKPORT_QTNFMAC
 	tristate
-	depends on QTNFMAC_PCIE
-	default m if QTNFMAC_PCIE=m
-	default y if QTNFMAC_PCIE=y
+	depends on !QTNFMAC
+	depends on BACKPORT_QTNFMAC_PCIE
+	default m if BACKPORT_QTNFMAC_PCIE=m
+	default y if BACKPORT_QTNFMAC_PCIE=y
 
-config QTNFMAC_PCIE
+config BACKPORT_QTNFMAC_PCIE
 	tristate "Quantenna QSR1000/QSR2000/QSR10g PCIe support"
+	depends on !QTNFMAC_PCIE
 	default n
-	depends on PCI && CFG80211
-	select QTNFMAC
+	depends on PCI && BACKPORT_CFG80211
+	select BACKPORT_QTNFMAC
 	select FW_LOADER
 	select CRC32
 	help

@@ -1,13 +1,15 @@
 # SPDX-License-Identifier: GPL-2.0-only
 
-config MT7615_COMMON
+config BACKPORT_MT7615_COMMON
 	tristate
-	select MT76_CORE
+	depends on !MT7615_COMMON
+	select BACKPORT_MT76_CORE
 
-config MT7615E
+config BACKPORT_MT7615E
 	tristate "MediaTek MT7615E and MT7663E (PCIe) support"
-	select MT7615_COMMON
-	depends on MAC80211
+	depends on !MT7615E
+	select BACKPORT_MT7615_COMMON
+	depends on BACKPORT_MAC80211
 	depends on PCI
 	help
 	  This adds support for MT7615-based wireless PCIe devices,
@@ -17,9 +19,10 @@ config MT7615E
 
 	  To compile this driver as a module, choose M here.
 
-config MT7622_WMAC
+config BACKPORT_MT7622_WMAC
 	bool "MT7622 (SoC) WMAC support"
-	depends on MT7615E
+	depends on !MT7622_WMAC
+	depends on BACKPORT_MT7615E
 	depends on ARCH_MEDIATEK || COMPILE_TEST
 	select REGMAP
 	default y
@@ -28,13 +31,14 @@ config MT7622_WMAC
 	  which has the same feature set as a MT7615, but limited to
 	  2.4 GHz only.
 
-config MT7663U
+config BACKPORT_MT7663U
 	tristate "MediaTek MT7663U (USB) support"
-	select MT76_USB
-	select MT7615_COMMON
-	depends on MAC80211
+	depends on !MT7663U
+	select BACKPORT_MT76_USB
+	select BACKPORT_MT7615_COMMON
+	depends on BACKPORT_MAC80211
 	depends on USB
 	help
-	  This adds support for MT7663U 802.11ax 2x2:2 wireless devices.
+	  This adds support for BACKPORT_MT7663U 802.11ax 2x2:2 wireless devices.
 
 	  To compile this driver as a module, choose M here.

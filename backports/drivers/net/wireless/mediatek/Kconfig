@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
-config WLAN_VENDOR_MEDIATEK
+config BACKPORT_WLAN_VENDOR_MEDIATEK
 	bool "MediaTek devices"
+	depends on !WLAN_VENDOR_MEDIATEK
 	default y
 	help
 	  If you have a wireless card belonging to this class, say Y.
@@ -10,7 +11,7 @@ config WLAN_VENDOR_MEDIATEK
 	  questions about these cards. If you say Y, you will be asked for
 	  your specific card in the following questions.
 
-if WLAN_VENDOR_MEDIATEK
+if BACKPORT_WLAN_VENDOR_MEDIATEK
 source "$BACKPORT_DIR/drivers/net/wireless/mediatek/mt7601u/Kconfig"
 source "$BACKPORT_DIR/drivers/net/wireless/mediatek/mt76/Kconfig"
-endif # WLAN_VENDOR_MEDIATEK
+endif # BACKPORT_WLAN_VENDOR_MEDIATEK

@@ -1,8 +1,9 @@
 # SPDX-License-Identifier: ISC
-config MT7915E
+config BACKPORT_MT7915E
 	tristate "MediaTek MT7915E (PCIe) support"
-	select MT76_CORE
-	depends on MAC80211
+	depends on !MT7915E
+	select BACKPORT_MT76_CORE
+	depends on BACKPORT_MAC80211
 	depends on PCI
 	help
 	  This adds support for MT7915-based wireless PCIe devices,

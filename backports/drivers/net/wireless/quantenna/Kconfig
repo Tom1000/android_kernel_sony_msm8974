@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
-config WLAN_VENDOR_QUANTENNA
+config BACKPORT_WLAN_VENDOR_QUANTENNA
 	bool "Quantenna wireless cards support"
+	depends on !WLAN_VENDOR_QUANTENNA
 	default y
 	help
 	  If you have a wireless card belonging to this class, say Y.
@@ -10,8 +11,8 @@ config WLAN_VENDOR_QUANTENNA
 	  questions about these cards. If you say Y, you will be asked for
 	  your specific card in the following questions.
 
-if WLAN_VENDOR_QUANTENNA
+if BACKPORT_WLAN_VENDOR_QUANTENNA
 
 source "$BACKPORT_DIR/drivers/net/wireless/quantenna/qtnfmac/Kconfig"
 
-endif # WLAN_VENDOR_QUANTENNA
+endif # BACKPORT_WLAN_VENDOR_QUANTENNA

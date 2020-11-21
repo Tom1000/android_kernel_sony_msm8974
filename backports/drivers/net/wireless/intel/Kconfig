@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
-config WLAN_VENDOR_INTEL
+config BACKPORT_WLAN_VENDOR_INTEL
 	bool "Intel devices"
+	depends on !WLAN_VENDOR_INTEL
 	default y
 	help
 	  If you have a wireless card belonging to this class, say Y.
@@ -10,10 +11,10 @@ config WLAN_VENDOR_INTEL
 	  questions about these cards. If you say Y, you will be asked for
 	  your specific card in the following questions.
 
-if WLAN_VENDOR_INTEL
+if BACKPORT_WLAN_VENDOR_INTEL
 
 source "$BACKPORT_DIR/drivers/net/wireless/intel/ipw2x00/Kconfig"
 source "$BACKPORT_DIR/drivers/net/wireless/intel/iwlegacy/Kconfig"
 source "$BACKPORT_DIR/drivers/net/wireless/intel/iwlwifi/Kconfig"
 
-endif # WLAN_VENDOR_INTEL
+endif # BACKPORT_WLAN_VENDOR_INTEL

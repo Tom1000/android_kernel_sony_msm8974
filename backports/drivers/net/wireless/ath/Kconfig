@@ -1,9 +1,11 @@
 # SPDX-License-Identifier: ISC
-config ATH_COMMON
+config BACKPORT_ATH_COMMON
 	tristate
+	depends on !ATH_COMMON
 
-config WLAN_VENDOR_ATH
+config BACKPORT_WLAN_VENDOR_ATH
 	bool "Atheros/Qualcomm devices"
+	depends on !WLAN_VENDOR_ATH
 	default y
 	help
 	  If you have a wireless card belonging to this class, say Y.
@@ -21,34 +23,38 @@ config WLAN_VENDOR_ATH
 
 	  http://wireless.kernel.org/en/users/Drivers/Atheros
 
-if WLAN_VENDOR_ATH
+if BACKPORT_WLAN_VENDOR_ATH
 
-config ATH_DEBUG
+config BACKPORT_ATH_DEBUG
 	bool "Atheros wireless debugging"
+	depends on !ATH_DEBUG
 	help
 	  Say Y, if you want to debug atheros wireless drivers.
 	  Right now only ath9k makes use of this.
 
-config ATH_TRACEPOINTS
+config BACKPORT_ATH_TRACEPOINTS
 	bool "Atheros wireless tracing"
-	depends on ATH_DEBUG
+	depends on !ATH_TRACEPOINTS
+	depends on BACKPORT_ATH_DEBUG
 	depends on EVENT_TRACING
 	help
 	  This option enables tracepoints for atheros wireless drivers.
 	  Currently, ath9k makes use of this facility.
 
-config ATH_REG_DYNAMIC_USER_REG_HINTS
+config BACKPORT_ATH_REG_DYNAMIC_USER_REG_HINTS
 	bool "Atheros dynamic user regulatory hints"
-	depends on CFG80211_CERTIFICATION_ONUS
+	depends on !ATH_REG_DYNAMIC_USER_REG_HINTS
+	depends on BACKPORT_CFG80211_CERTIFICATION_ONUS
 	default n
 	help
 	  Say N. This should only be enabled in countries where
 	  this feature is explicitly allowed and only on cards that
 	  specifically have been tested for this.
 
-config ATH_REG_DYNAMIC_USER_CERT_TESTING
+config BACKPORT_ATH_REG_DYNAMIC_USER_CERT_TESTING
 	bool "Atheros dynamic user regulatory testing"
-	depends on ATH_REG_DYNAMIC_USER_REG_HINTS && CFG80211_CERTIFICATION_ONUS
+	depends on !ATH_REG_DYNAMIC_USER_CERT_TESTING
+	depends on ATH_REG_DYNAMIC_USER_REG_HINTS && BACKPORT_CFG80211_CERTIFICATION_ONUS
 	default n
 	help
 	  Say N. This should only be enabled on systems

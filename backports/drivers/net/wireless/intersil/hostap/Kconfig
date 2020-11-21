@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
-config HOSTAP
+config BACKPORT_HOSTAP
 	tristate "IEEE 802.11 for Host AP (Prism2/2.5/3 and WEP/TKIP/CCMP)"
+	depends on !HOSTAP
 	select WIRELESS_EXT
 	select WEXT_SPY
 	select WEXT_PRIV
@@ -11,10 +12,10 @@ config HOSTAP
 	select CRYPTO_MICHAEL_MIC
 	select CRYPTO_ECB
 	select CRC32
-	select LIB80211
-	select LIB80211_CRYPT_WEP
-	select LIB80211_CRYPT_TKIP
-	select LIB80211_CRYPT_CCMP
+	select BACKPORT_LIB80211
+	select BACKPORT_LIB80211_CRYPT_WEP
+	select BACKPORT_LIB80211_CRYPT_TKIP
+	select BACKPORT_LIB80211_CRYPT_CCMP
 	help
 	Shared driver code for IEEE 802.11b wireless cards based on
 	Intersil Prism2/2.5/3 chipset. This driver supports so called
@@ -33,9 +34,10 @@ config HOSTAP
 	The driver can be compiled as a module and it will be called
 	hostap.
 
-config HOSTAP_FIRMWARE
+config BACKPORT_HOSTAP_FIRMWARE
 	bool "Support downloading firmware images with Host AP driver"
-	depends on HOSTAP
+	depends on !HOSTAP_FIRMWARE
+	depends on BACKPORT_HOSTAP
 	help
 	Configure Host AP driver to include support for firmware image
 	download. This option by itself only enables downloading to the
@@ -46,9 +48,10 @@ config HOSTAP_FIRMWARE
 	Firmware image downloading needs a user space tool, prism2_srec.
 	It is available from http://hostap.epitest.fi/.
 
-config HOSTAP_FIRMWARE_NVRAM
+config BACKPORT_HOSTAP_FIRMWARE_NVRAM
 	bool "Support for non-volatile firmware download"
-	depends on HOSTAP_FIRMWARE
+	depends on !HOSTAP_FIRMWARE_NVRAM
+	depends on BACKPORT_HOSTAP_FIRMWARE
 	help
 	Allow Host AP driver to write firmware images to the non-volatile
 	card memory, i.e. flash memory that survives power cycling.
@@ -58,9 +61,10 @@ config HOSTAP_FIRMWARE_NVRAM
 	Firmware image downloading needs a user space tool, prism2_srec.
 	It is available from http://hostap.epitest.fi/.
 
-config HOSTAP_PLX
+config BACKPORT_HOSTAP_PLX
 	tristate "Host AP driver for Prism2/2.5/3 in PLX9052 PCI adaptors"
-	depends on PCI && HOSTAP
+	depends on !HOSTAP_PLX
+	depends on PCI && BACKPORT_HOSTAP
 	help
 	Host AP driver's version for Prism2/2.5/3 PC Cards in PLX9052 based
 	PCI adaptors.
@@ -72,9 +76,10 @@ config HOSTAP_PLX
 	The driver can be compiled as a module and will be named
 	hostap_plx.
 
-config HOSTAP_PCI
+config BACKPORT_HOSTAP_PCI
 	tristate "Host AP driver for Prism2.5 PCI adaptors"
-	depends on PCI && HOSTAP
+	depends on !HOSTAP_PCI
+	depends on PCI && BACKPORT_HOSTAP
 	help
 	Host AP driver's version for Prism2.5 PCI adaptors.
 
@@ -85,9 +90,10 @@ config HOSTAP_PCI
 	The driver can be compiled as a module and will be named
 	hostap_pci.
 
-config HOSTAP_CS
+config BACKPORT_HOSTAP_CS
 	tristate "Host AP driver for Prism2/2.5/3 PC Cards"
-	depends on PCMCIA && HOSTAP
+	depends on !HOSTAP_CS
+	depends on PCMCIA && BACKPORT_HOSTAP
 	help
 	Host AP driver's version for Prism2/2.5/3 PC Cards.
 

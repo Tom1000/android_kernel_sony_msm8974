@@ -1,12 +1,13 @@
 # SPDX-License-Identifier: GPL-2.0-only
-config CFG80211
+config BACKPORT_CFG80211
 	tristate "cfg80211 - wireless configuration API"
+	depends on !CFG80211
 	depends on RFKILL || !RFKILL
 	select FW_LOADER
 	# may need to update this when certificates are changed and are
 	# using a different algorithm, though right now they shouldn't
 	# (this is here rather than below to allow it to be a module)
-	select CRYPTO_SHA256 if CFG80211_USE_KERNEL_REGDB_KEYS
+	select CRYPTO_SHA256 if BACKPORT_CFG80211_USE_KERNEL_REGDB_KEYS
 	help
 	  cfg80211 is the Linux wireless LAN (802.11) configuration API.
 	  Enable this if you have a wireless device.
@@ -17,10 +18,11 @@ config CFG80211
 
 	  When built as a module it will be called cfg80211.
 
-if CFG80211
+if BACKPORT_CFG80211
 
-config NL80211_TESTMODE
+config BACKPORT_NL80211_TESTMODE
 	bool "nl80211 testmode command"
+	depends on !NL80211_TESTMODE
 	help
 	  The nl80211 testmode command helps implementing things like
 	  factory calibration or validation tools for wireless chips.
@@ -33,8 +35,9 @@ config NL80211_TESTMODE
 
 	  Say N.
 
-config CFG80211_DEVELOPER_WARNINGS
+config BACKPORT_CFG80211_DEVELOPER_WARNINGS
 	bool "enable developer warnings"
+	depends on !CFG80211_DEVELOPER_WARNINGS
 	default n
 	help
 	  This option enables some additional warnings that help
@@ -49,8 +52,9 @@ config CFG80211_DEVELOPER_WARNINGS
 	  on it (or mac80211).
 
 
-config CFG80211_CERTIFICATION_ONUS
+config BACKPORT_CFG80211_CERTIFICATION_ONUS
 	bool "cfg80211 certification onus"
+	depends on !CFG80211_CERTIFICATION_ONUS
 	depends on EXPERT
 	default n
 	help
@@ -70,8 +74,9 @@ config CFG80211_CERTIFICATION_ONUS
 	  you are a wireless researcher and are working in a controlled
 	  and approved environment by your local regulatory agency.
 
-config CFG80211_REQUIRE_SIGNED_REGDB
+config BACKPORT_CFG80211_REQUIRE_SIGNED_REGDB
 	bool "require regdb signature" if CFG80211_CERTIFICATION_ONUS
+	depends on !CFG80211_REQUIRE_SIGNED_REGDB
 	default y
 	select SYSTEM_DATA_VERIFICATION
 	help
@@ -80,10 +85,11 @@ config CFG80211_REQUIRE_SIGNED_REGDB
 	  signature for the regulatory.db file made by one of the
 	  keys in the certs/ directory.
 
-config CFG80211_USE_KERNEL_REGDB_KEYS
+config BACKPORT_CFG80211_USE_KERNEL_REGDB_KEYS
 	bool "allow regdb keys shipped with the kernel" if CFG80211_CERTIFICATION_ONUS
+	depends on !CFG80211_USE_KERNEL_REGDB_KEYS
 	default y
-	depends on CFG80211_REQUIRE_SIGNED_REGDB
+	depends on BACKPORT_CFG80211_REQUIRE_SIGNED_REGDB
 	help
 	  Allow the regulatory database to be signed by one of the keys for
 	  which certificates are part of the kernel sources
@@ -92,9 +98,10 @@ config CFG80211_USE_KERNEL_REGDB_KEYS
 	  This is currently only Seth Forshee's key, who is the regulatory
 	  database maintainer.
 
-config CFG80211_EXTRA_REGDB_KEYDIR
+config BACKPORT_CFG80211_EXTRA_REGDB_KEYDIR
 	string "additional regdb key directory" if CFG80211_CERTIFICATION_ONUS
-	depends on CFG80211_REQUIRE_SIGNED_REGDB
+	depends on !CFG80211_EXTRA_REGDB_KEYDIR
+	depends on BACKPORT_CFG80211_REQUIRE_SIGNED_REGDB
 	help
 	  If selected, point to a directory with DER-encoded X.509
 	  certificates like in the kernel sources (net/wireless/certs/)
@@ -103,9 +110,10 @@ config CFG80211_EXTRA_REGDB_KEYDIR
 	  Note that you need to also select the correct CRYPTO_<hash> modules
 	  for your certificates, and if cfg80211 is built-in they also must be.
 
-config CFG80211_REG_CELLULAR_HINTS
+config BACKPORT_CFG80211_REG_CELLULAR_HINTS
 	bool "cfg80211 regulatory support for cellular base station hints"
-	depends on CFG80211_CERTIFICATION_ONUS
+	depends on !CFG80211_REG_CELLULAR_HINTS
+	depends on BACKPORT_CFG80211_CERTIFICATION_ONUS
 	help
 	  This option enables support for parsing regulatory hints
 	  from cellular base stations. If enabled and at least one driver
@@ -116,9 +124,10 @@ config CFG80211_REG_CELLULAR_HINTS
 	  feature if you have tested and validated this feature on your
 	  systems.
 
-config CFG80211_REG_RELAX_NO_IR
+config BACKPORT_CFG80211_REG_RELAX_NO_IR
 	bool "cfg80211 support for NO_IR relaxation"
-	depends on CFG80211_CERTIFICATION_ONUS
+	depends on !CFG80211_REG_RELAX_NO_IR
+	depends on BACKPORT_CFG80211_CERTIFICATION_ONUS
 	help
 	 This option enables support for relaxation of the NO_IR flag for
 	 situations that certain regulatory bodies have provided clarifications
@@ -140,8 +149,9 @@ config CFG80211_REG_RELAX_NO_IR
 	 support this feature by declaring the appropriate channel flags and
 	 capabilities in their registration flow.
 
-config CFG80211_DEFAULT_PS
+config BACKPORT_CFG80211_DEFAULT_PS
 	bool "enable powersave by default"
+	depends on !CFG80211_DEFAULT_PS
 	default y
 	help
 	  This option enables powersave mode by default.
@@ -150,16 +160,18 @@ config CFG80211_DEFAULT_PS
 	  applications instead -- they need to register their network
 	  latency requirement, see Documentation/power/pm_qos_interface.rst.
 
-config CFG80211_DEBUGFS
+config BACKPORT_CFG80211_DEBUGFS
 	bool "cfg80211 DebugFS entries"
+	depends on !CFG80211_DEBUGFS
 	depends on DEBUG_FS
 	help
 	  You can enable this if you want debugfs entries for cfg80211.
 
 	  If unsure, say N.
 
-config CFG80211_CRDA_SUPPORT
+config BACKPORT_CFG80211_CRDA_SUPPORT
 	bool "support CRDA" if EXPERT
+	depends on !CFG80211_CRDA_SUPPORT
 	default y
 	help
 	  You should enable this option unless you know for sure you have no
@@ -168,24 +180,27 @@ config CFG80211_CRDA_SUPPORT
 
 	  If unsure, say Y.
 
-config CFG80211_WEXT
+config BACKPORT_CFG80211_WEXT
 	bool "cfg80211 wireless extensions compatibility" if !CFG80211_WEXT_EXPORT
+	depends on !CFG80211_WEXT
 	depends on WEXT_CORE
-	default y if CFG80211_WEXT_EXPORT
+	default y if BACKPORT_CFG80211_WEXT_EXPORT
 	help
 	  Enable this option if you need old userspace for wireless
 	  extensions with cfg80211-based drivers.
 
-config CFG80211_WEXT_EXPORT
+config BACKPORT_CFG80211_WEXT_EXPORT
 	bool
+	depends on !CFG80211_WEXT_EXPORT
 	help
 	  Drivers should select this option if they require cfg80211's
 	  wext compatibility symbols to be exported.
 
-endif # CFG80211
+endif # BACKPORT_CFG80211
 
-config LIB80211
+config BACKPORT_LIB80211
 	tristate
+	depends on !LIB80211
 	default n
 	help
 	  This options enables a library of common routines used
@@ -193,23 +208,27 @@ config LIB80211
 
 	  Drivers should select this themselves if needed.
 
-config LIB80211_CRYPT_WEP
+config BACKPORT_LIB80211_CRYPT_WEP
 	tristate
+	depends on !LIB80211_CRYPT_WEP
 	select CRYPTO_LIB_ARC4
 
-config LIB80211_CRYPT_CCMP
+config BACKPORT_LIB80211_CRYPT_CCMP
 	tristate
+	depends on !LIB80211_CRYPT_CCMP
 	select CRYPTO
 	select CRYPTO_AES
 	select CRYPTO_CCM
 
-config LIB80211_CRYPT_TKIP
+config BACKPORT_LIB80211_CRYPT_TKIP
 	tristate
+	depends on !LIB80211_CRYPT_TKIP
 	select CRYPTO_LIB_ARC4
 
-config LIB80211_DEBUG
+config BACKPORT_LIB80211_DEBUG
 	bool "lib80211 debugging messages"
-	depends on LIB80211
+	depends on !LIB80211_DEBUG
+	depends on BACKPORT_LIB80211
 	default n
 	help
 	  You can enable this if you want verbose debugging messages

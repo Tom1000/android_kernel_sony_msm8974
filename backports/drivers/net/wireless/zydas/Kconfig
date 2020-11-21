@@ -1,6 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
-config WLAN_VENDOR_ZYDAS
+config BACKPORT_WLAN_VENDOR_ZYDAS
 	bool "ZyDAS devices"
+	depends on !WLAN_VENDOR_ZYDAS
 	default y
 	help
 	  If you have a wireless card belonging to this class, say Y.
@@ -10,11 +11,12 @@ config WLAN_VENDOR_ZYDAS
 	  questions about these cards. If you say Y, you will be asked for
 	  your specific card in the following questions.
 
-if WLAN_VENDOR_ZYDAS
+if BACKPORT_WLAN_VENDOR_ZYDAS
 
-config USB_ZD1201
+config BACKPORT_USB_ZD1201
 	tristate "USB ZD1201 based Wireless device support"
-	depends on CFG80211 && USB
+	depends on !USB_ZD1201
+	depends on BACKPORT_CFG80211 && USB
 	select WIRELESS_EXT
 	select WEXT_PRIV
 	select FW_LOADER
@@ -33,4 +35,4 @@ config USB_ZD1201
 
 source "$BACKPORT_DIR/drivers/net/wireless/zydas/zd1211rw/Kconfig"
 
-endif # WLAN_VENDOR_ZYDAS
+endif # BACKPORT_WLAN_VENDOR_ZYDAS
