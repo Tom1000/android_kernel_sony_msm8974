@@ -310,7 +310,7 @@ mt76_phy_init(struct mt76_dev *dev, struct ieee80211_hw *hw)
 	wiphy->interface_modes =
 		BIT(NL80211_IFTYPE_STATION) |
 		BIT(NL80211_IFTYPE_AP) |
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CONFIG_BACKPORT_MAC80211_MESH
 		BIT(NL80211_IFTYPE_MESH_POINT) |
 #endif
 		BIT(NL80211_IFTYPE_P2P_CLIENT) |
@@ -462,7 +462,7 @@ int mt76_register_device(struct mt76_dev *dev, bool vht,
 	mt76_check_sband(&dev->phy, &phy->sband_2g, NL80211_BAND_2GHZ);
 	mt76_check_sband(&dev->phy, &phy->sband_5g, NL80211_BAND_5GHZ);
 
-	if (IS_ENABLED(CONFIG_MT76_LEDS)) {
+	if (IS_ENABLED(CONFIG_BACKPORT_MT76_LEDS)) {
 		ret = mt76_led_init(dev);
 		if (ret)
 			return ret;
@@ -476,7 +476,7 @@ void mt76_unregister_device(struct mt76_dev *dev)
 {
 	struct ieee80211_hw *hw = dev->hw;
 
-	if (IS_ENABLED(CONFIG_MT76_LEDS))
+	if (IS_ENABLED(CONFIG_BACKPORT_MT76_LEDS))
 		mt76_led_cleanup(dev);
 	mt76_tx_status_check(dev, NULL, true);
 	ieee80211_unregister_hw(hw);

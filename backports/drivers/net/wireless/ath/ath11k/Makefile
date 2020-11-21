@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: BSD-3-Clause-Clear
-obj-$(CONFIG_ATH11K) += ath11k.o
+obj-$(CONFIG_BACKPORT_ATH11K) += ath11k.o
 ath11k-y += core.o \
 	    hal.o \
 	    hal_tx.o \
@@ -17,9 +17,9 @@ ath11k-y += core.o \
 	    ce.o \
 	    peer.o
 
-ath11k-$(CONFIG_ATH11K_DEBUGFS) += debug_htt_stats.o debugfs_sta.o
-ath11k-$(CONFIG_NL80211_TESTMODE) += testmode.o
-ath11k-$(CONFIG_ATH11K_TRACING) += trace.o
+ath11k-$(CONFIG_BACKPORT_ATH11K_DEBUGFS) += debug_htt_stats.o debugfs_sta.o
+ath11k-$(CONFIG_BACKPORT_NL80211_TESTMODE) += testmode.o
+ath11k-$(CONFIG_BACKPORT_ATH11K_TRACING) += trace.o
 ath11k-$(CONFIG_THERMAL) += thermal.o
 
 # for tracing framework to find trace.h

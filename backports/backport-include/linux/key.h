@@ -1,6 +1,6 @@
 #ifndef __BP_KEY_H
 #define __BP_KEY_H
-#ifndef CPTCFG_BPAUTO_BUILD_SYSTEM_DATA_VERIFICATION
+#ifndef CONFIG_BACKPORT_BPAUTO_BUILD_SYSTEM_DATA_VERIFICATION
 #include_next <linux/key.h>
 #else
 #include <linux/types.h>
@@ -62,5 +62,5 @@ static inline s32 key_serial(const struct key *key)
 	return key ? key->serial : 0;
 }
 
-#endif /* CPTCFG_BPAUTO_BUILD_SYSTEM_DATA_VERIFICATION */
+#endif /* CONFIG_BACKPORT_BPAUTO_BUILD_SYSTEM_DATA_VERIFICATION */
 #endif /* __BP_KEY_H */

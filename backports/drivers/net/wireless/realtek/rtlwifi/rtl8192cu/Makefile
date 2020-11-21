@@ -10,4 +10,4 @@ rtl8192cu-objs :=		\
 		table.o		\
 		trx.o
 
-obj-$(CONFIG_RTL8192CU) += rtl8192cu.o
+obj-$(CONFIG_BACKPORT_RTL8192CU) += rtl8192cu.o

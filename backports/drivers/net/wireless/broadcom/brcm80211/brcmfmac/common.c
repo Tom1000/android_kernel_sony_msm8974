@@ -340,7 +340,7 @@ done:
 	return err;
 }
 
-#ifndef CONFIG_BRCM_TRACING
+#ifndef CONFIG_BACKPORT_BRCM_TRACING
 void __brcmf_err(struct brcmf_bus *bus, const char *func, const char *fmt, ...)
 {
 	struct va_format vaf;
@@ -359,7 +359,7 @@ void __brcmf_err(struct brcmf_bus *bus, const char *func, const char *fmt, ...)
 }
 #endif
 
-#if defined(CONFIG_BRCM_TRACING) || defined(CONFIG_BRCMDBG)
+#if defined(CONFIG_BACKPORT_BRCM_TRACING) || defined(CONFIG_BACKPORT_BRCMDBG)
 void __brcmf_dbg(u32 level, const char *func, const char *fmt, ...)
 {
 	struct va_format vaf = {

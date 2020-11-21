@@ -544,7 +544,7 @@ extern const char iwl_ax101_name[];
 extern const char iwl_ax200_killer_1650w_name[];
 extern const char iwl_ax200_killer_1650x_name[];
 
-#if IS_ENABLED(CONFIG_IWLDVM)
+#if IS_ENABLED(CONFIG_BACKPORT_IWLDVM)
 extern const struct iwl_cfg iwl5300_agn_cfg;
 extern const struct iwl_cfg iwl5100_agn_cfg;
 extern const struct iwl_cfg iwl5350_agn_cfg;
@@ -587,8 +587,8 @@ extern const struct iwl_cfg iwl6035_2agn_sff_cfg;
 extern const struct iwl_cfg iwl105_bgn_cfg;
 extern const struct iwl_cfg iwl105_bgn_d_cfg;
 extern const struct iwl_cfg iwl135_bgn_cfg;
-#endif /* CONFIG_IWLDVM */
-#if IS_ENABLED(CONFIG_IWLMVM)
+#endif /* CONFIG_BACKPORT_IWLDVM */
+#if IS_ENABLED(CONFIG_BACKPORT_IWLMVM)
 extern const struct iwl_cfg iwl7260_2ac_cfg;
 extern const struct iwl_cfg iwl7260_2ac_cfg_high_temp;
 extern const struct iwl_cfg iwl7260_2n_cfg;
@@ -641,6 +641,6 @@ extern const struct iwl_cfg iwlax411_2ax_cfg_so_gf4_a0;
 extern const struct iwl_cfg iwlax411_2ax_cfg_so_gf4_a0_long;
 extern const struct iwl_cfg iwlax411_2ax_cfg_sosnj_gf4_a0;
 extern const struct iwl_cfg iwlax211_cfg_snj_gf_a0;
-#endif /* CPTCFG_IWLMVM || CPTCFG_IWLFMAC */
+#endif /* CONFIG_BACKPORT_IWLMVM || CONFIG_BACKPORT_IWLFMAC */
 
 #endif /* __IWL_CONFIG_H__ */

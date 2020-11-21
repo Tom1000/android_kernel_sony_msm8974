@@ -54,7 +54,7 @@ void ath11k_warn(struct ath11k_base *ab, const char *fmt, ...)
 	va_end(args);
 }
 
-#ifdef CONFIG_ATH11K_DEBUG
+#ifdef CONFIG_BACKPORT_ATH11K_DEBUG
 void __ath11k_dbg(struct ath11k_base *ab, enum ath11k_debug_mask mask,
 		  const char *fmt, ...)
 {
@@ -104,7 +104,7 @@ void ath11k_dbg_dump(struct ath11k_base *ab,
 
 #endif
 
-#ifdef CONFIG_ATH11K_DEBUGFS
+#ifdef CONFIG_BACKPORT_ATH11K_DEBUGFS
 static void ath11k_fw_stats_pdevs_free(struct list_head *head)
 {
 	struct ath11k_fw_stats_pdev *i, *tmp;
@@ -1077,4 +1077,4 @@ int ath11k_debug_register(struct ath11k *ar)
 void ath11k_debug_unregister(struct ath11k *ar)
 {
 }
-#endif /* CONFIG_ATH11K_DEBUGFS */
+#endif /* CONFIG_BACKPORT_ATH11K_DEBUGFS */

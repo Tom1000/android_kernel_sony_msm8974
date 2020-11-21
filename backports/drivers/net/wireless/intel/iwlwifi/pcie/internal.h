@@ -296,7 +296,7 @@ struct iwl_tso_hdr_page {
 	u8 *pos;
 };
 
-#ifdef CONFIG_IWLWIFI_DEBUGFS
+#ifdef CONFIG_BACKPORT_IWLWIFI_DEBUGFS
 /**
  * enum iwl_fw_mon_dbgfs_state - the different states of the monitor_data
  * debugfs file
@@ -345,7 +345,7 @@ enum iwl_image_response_code {
  *	in &iwl_fw_mon_dbgfs_state enum
  * @mutex: locked while reading from monitor_data debugfs file
  */
-#ifdef CONFIG_IWLWIFI_DEBUGFS
+#ifdef CONFIG_BACKPORT_IWLWIFI_DEBUGFS
 struct cont_rec {
 	u32 prev_wr_ptr;
 	u32 prev_wrap_cnt;
@@ -393,7 +393,7 @@ struct cont_rec {
  * @reg_lock: protect hw register access
  * @mutex: to protect stop_device / start_fw / start_hw
  * @cmd_in_flight: true when we have a host command in flight
-#ifdef CONFIG_IWLWIFI_DEBUGFS
+#ifdef CONFIG_BACKPORT_IWLWIFI_DEBUGFS
  * @fw_mon_data: fw continuous recording data
 #endif
  * @msix_entries: array of MSI-X entries
@@ -492,7 +492,7 @@ struct iwl_trans_pcie {
 	spinlock_t reg_lock;
 	bool cmd_hold_nic_awake;
 
-#ifdef CONFIG_IWLWIFI_DEBUGFS
+#ifdef CONFIG_BACKPORT_IWLWIFI_DEBUGFS
 	struct cont_rec fw_mon_data;
 #endif
 
@@ -916,7 +916,7 @@ static inline void __iwl_trans_pcie_set_bits_mask(struct iwl_trans *trans,
 {
 	u32 v;
 
-#ifdef CONFIG_IWLWIFI_DEBUG
+#ifdef CONFIG_BACKPORT_IWLWIFI_DEBUG
 	WARN_ON_ONCE(value & ~mask);
 #endif
 
@@ -947,7 +947,7 @@ void iwl_trans_pcie_rf_kill(struct iwl_trans *trans, bool state);
 void iwl_trans_pcie_dump_regs(struct iwl_trans *trans);
 void iwl_trans_pcie_sync_nmi(struct iwl_trans *trans);
 
-#ifdef CONFIG_IWLWIFI_DEBUGFS
+#ifdef CONFIG_BACKPORT_IWLWIFI_DEBUGFS
 void iwl_trans_pcie_dbgfs_register(struct iwl_trans *trans);
 #else
 static inline void iwl_trans_pcie_dbgfs_register(struct iwl_trans *trans) { }

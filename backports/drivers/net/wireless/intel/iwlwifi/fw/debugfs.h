@@ -62,7 +62,7 @@
 
 #include "runtime.h"
 
-#ifdef CONFIG_IWLWIFI_DEBUGFS
+#ifdef CONFIG_BACKPORT_IWLWIFI_DEBUGFS
 void iwl_fwrt_dbgfs_register(struct iwl_fw_runtime *fwrt,
 			    struct dentry *dbgfs_dir);
 
@@ -70,4 +70,4 @@ void iwl_fwrt_dbgfs_register(struct iwl_fw_runtime *fwrt,
 static inline void iwl_fwrt_dbgfs_register(struct iwl_fw_runtime *fwrt,
 					   struct dentry *dbgfs_dir) { }
 
-#endif /* CONFIG_IWLWIFI_DEBUGFS */
+#endif /* CONFIG_BACKPORT_IWLWIFI_DEBUGFS */

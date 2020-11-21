@@ -2519,7 +2519,7 @@ void rtw_coex_defreeze_work(struct work_struct *work)
 	mutex_unlock(&rtwdev->mutex);
 }
 
-#ifdef CONFIG_RTW88_DEBUGFS
+#ifdef CONFIG_BACKPORT_RTW88_DEBUGFS
 #define INFO_SIZE	80
 
 #define case_BTINFO(src) \
@@ -3009,4 +3009,4 @@ void rtw_coex_display_coex_info(struct rtw_dev *rtwdev, struct seq_file *m)
 
 	rtw_coex_set_coexinfo_hw(rtwdev, m);
 }
-#endif /* CONFIG_RTW88_DEBUGFS */
+#endif /* CONFIG_BACKPORT_RTW88_DEBUGFS */

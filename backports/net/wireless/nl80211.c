@@ -57,7 +57,7 @@ static __genl_const struct genl_multicast_group nl80211_mcgrps[] = {
 	[NL80211_MCGRP_MLME] = { .name = NL80211_MULTICAST_GROUP_MLME },
 	[NL80211_MCGRP_VENDOR] = { .name = NL80211_MULTICAST_GROUP_VENDOR },
 	[NL80211_MCGRP_NAN] = { .name = NL80211_MULTICAST_GROUP_NAN },
-#ifdef CONFIG_NL80211_TESTMODE
+#ifdef CONFIG_BACKPORT_NL80211_TESTMODE
 	[NL80211_MCGRP_TESTMODE] = { .name = NL80211_MULTICAST_GROUP_TESTMODE }
 #endif
 };
@@ -1822,7 +1822,7 @@ static int nl80211_add_commands_unsplit(struct cfg80211_registered_device *rdev,
 	}
 	CMD(start_p2p_device, START_P2P_DEVICE);
 	CMD(set_mcast_rate, SET_MCAST_RATE);
-#ifdef CONFIG_NL80211_TESTMODE
+#ifdef CONFIG_BACKPORT_NL80211_TESTMODE
 	CMD(testmode_cmd, TESTMODE);
 #endif
 
@@ -4034,7 +4034,7 @@ static int nl80211_set_key(struct sk_buff *skb, struct genl_info *info)
 		if (err)
 			goto out;
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CONFIG_BACKPORT_CFG80211_WEXT
 		dev->ieee80211_ptr->wext.default_key = key.idx;
 #endif
 	} else if (key.defmgmt) {
@@ -4056,7 +4056,7 @@ static int nl80211_set_key(struct sk_buff *skb, struct genl_info *info)
 		if (err)
 			goto out;
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CONFIG_BACKPORT_CFG80211_WEXT
 		dev->ieee80211_ptr->wext.default_mgmt_key = key.idx;
 #endif
 	} else if (key.defbeacon) {
@@ -4211,7 +4211,7 @@ static int nl80211_del_key(struct sk_buff *skb, struct genl_info *info)
 				   key.type == NL80211_KEYTYPE_PAIRWISE,
 				   mac_addr);
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CONFIG_BACKPORT_CFG80211_WEXT
 	if (!err) {
 		if (key.idx == dev->ieee80211_ptr->wext.default_key)
 			dev->ieee80211_ptr->wext.default_key = -1;
@@ -7405,7 +7405,7 @@ out_err:
 	return err;
 }
 
-#ifdef CONFIG_CFG80211_CRDA_SUPPORT
+#ifdef CONFIG_BACKPORT_CFG80211_CRDA_SUPPORT
 static const struct nla_policy reg_rule_policy[NL80211_REG_RULE_ATTR_MAX + 1] = {
 	[NL80211_ATTR_REG_RULE_FLAGS]		= { .type = NLA_U32 },
 	[NL80211_ATTR_FREQ_RANGE_START]		= { .type = NLA_U32 },
@@ -7527,7 +7527,7 @@ static int nl80211_set_reg(struct sk_buff *skb, struct genl_info *info)
 	kfree(rd);
 	return r;
 }
-#endif /* CONFIG_CFG80211_CRDA_SUPPORT */
+#endif /* CONFIG_BACKPORT_CFG80211_CRDA_SUPPORT */
 
 static int validate_scan_freqs(struct nlattr *freqs)
 {
@@ -10039,7 +10039,7 @@ void __cfg80211_send_event_skb(struct sk_buff *skb, gfp_t gfp)
 }
 EXPORT_SYMBOL(__cfg80211_send_event_skb);
 
-#ifdef CONFIG_NL80211_TESTMODE
+#ifdef CONFIG_BACKPORT_NL80211_TESTMODE
 static int nl80211_testmode_do(struct sk_buff *skb, struct genl_info *info)
 {
 	struct cfg80211_registered_device *rdev = info->user_ptr[0];
@@ -14604,7 +14604,7 @@ static __genl_const struct genl_ops nl80211_ops[] = {
 		.internal_flags = NL80211_FLAG_NEED_RTNL,
 		/* can be retrieved by unprivileged users */
 	},
-#ifdef CONFIG_CFG80211_CRDA_SUPPORT
+#ifdef CONFIG_BACKPORT_CFG80211_CRDA_SUPPORT
 	{
 		.cmd = NL80211_CMD_SET_REG,
 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
@@ -14728,7 +14728,7 @@ static __genl_const struct genl_ops nl80211_ops[] = {
 		.internal_flags = NL80211_FLAG_NEED_NETDEV_UP |
 				  NL80211_FLAG_NEED_RTNL,
 	},
-#ifdef CONFIG_NL80211_TESTMODE
+#ifdef CONFIG_BACKPORT_NL80211_TESTMODE
 	{
 		.cmd = NL80211_CMD_TESTMODE,
 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,

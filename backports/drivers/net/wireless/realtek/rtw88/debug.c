@@ -11,7 +11,7 @@
 #include "debug.h"
 #include "phy.h"
 
-#ifdef CONFIG_RTW88_DEBUGFS
+#ifdef CONFIG_BACKPORT_RTW88_DEBUGFS
 
 struct rtw_debugfs_priv {
 	struct rtw_dev *rtwdev;
@@ -919,9 +919,9 @@ void rtw_debugfs_init(struct rtw_dev *rtwdev)
 	rtw_debugfs_add_r(tx_pwr_tbl);
 }
 
-#endif /* CONFIG_RTW88_DEBUGFS */
+#endif /* CONFIG_BACKPORT_RTW88_DEBUGFS */
 
-#ifdef CONFIG_RTW88_DEBUG
+#ifdef CONFIG_BACKPORT_RTW88_DEBUG
 
 void __rtw_dbg(struct rtw_dev *rtwdev, enum rtw_debug_mask mask,
 	       const char *fmt, ...)
@@ -941,4 +941,4 @@ void __rtw_dbg(struct rtw_dev *rtwdev, enum rtw_debug_mask mask,
 }
 EXPORT_SYMBOL(__rtw_dbg);
 
-#endif /* CONFIG_RTW88_DEBUG */
+#endif /* CONFIG_BACKPORT_RTW88_DEBUG */

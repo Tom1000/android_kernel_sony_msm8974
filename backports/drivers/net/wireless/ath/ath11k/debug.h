@@ -126,7 +126,7 @@ __printf(2, 3) void ath11k_warn(struct ath11k_base *ab, const char *fmt, ...);
 
 extern unsigned int ath11k_debug_mask;
 
-#ifdef CONFIG_ATH11K_DEBUG
+#ifdef CONFIG_BACKPORT_ATH11K_DEBUG
 __printf(3, 4) void __ath11k_dbg(struct ath11k_base *ab,
 				 enum ath11k_debug_mask mask,
 				 const char *fmt, ...);
@@ -134,7 +134,7 @@ void ath11k_dbg_dump(struct ath11k_base *ab,
 		     enum ath11k_debug_mask mask,
 		     const char *msg, const char *prefix,
 		     const void *buf, size_t len);
-#else /* CONFIG_ATH11K_DEBUG */
+#else /* CONFIG_BACKPORT_ATH11K_DEBUG */
 static inline int __ath11k_dbg(struct ath11k_base *ab,
 			       enum ath11k_debug_mask dbg_mask,
 			       const char *fmt, ...)
@@ -148,9 +148,9 @@ static inline void ath11k_dbg_dump(struct ath11k_base *ab,
 				   const void *buf, size_t len)
 {
 }
-#endif /* CONFIG_ATH11K_DEBUG */
+#endif /* CONFIG_BACKPORT_ATH11K_DEBUG */
 
-#ifdef CONFIG_ATH11K_DEBUGFS
+#ifdef CONFIG_BACKPORT_ATH11K_DEBUGFS
 int ath11k_debug_soc_create(struct ath11k_base *ab);
 void ath11k_debug_soc_destroy(struct ath11k_base *ab);
 int ath11k_debug_pdev_create(struct ath11k_base *ab);
@@ -295,7 +295,7 @@ ath11k_update_per_peer_stats_from_txcompl(struct ath11k *ar,
 {
 }
 
-#endif /* CONFIG_MAC80211_DEBUGFS*/
+#endif /* CONFIG_BACKPORT_MAC80211_DEBUGFS*/
 
 #define ath11k_dbg(ar, dbg_mask, fmt, ...)			\
 do {								\

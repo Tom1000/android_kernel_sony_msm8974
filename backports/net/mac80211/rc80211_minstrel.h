@@ -154,7 +154,7 @@ struct minstrel_priv {
 
 	u8 cck_rates[4];
 
-#ifdef CONFIG_MAC80211_DEBUGFS
+#ifdef CONFIG_BACKPORT_MAC80211_DEBUGFS
 	/*
 	 * enable fixed rate processing per RC
 	 *   - write static index to debugfs:ieee80211/phyX/rc/fixed_rate_idx

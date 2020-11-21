@@ -4,7 +4,7 @@
 
 struct b43legacy_wldev;
 
-#ifdef CONFIG_B43LEGACY_LEDS
+#ifdef CONFIG_BACKPORT_B43LEGACY_LEDS
 
 #include <linux/types.h>
 #include <linux/leds.h>
@@ -46,7 +46,7 @@ enum b43legacy_led_behaviour {
 void b43legacy_leds_init(struct b43legacy_wldev *dev);
 void b43legacy_leds_exit(struct b43legacy_wldev *dev);
 
-#else /* CONFIG_B43LEGACY_LEDS */
+#else /* CONFIG_BACKPORT_B43LEGACY_LEDS */
 /* LED support disabled */
 
 struct b43legacy_led {
@@ -59,6 +59,6 @@ static inline void b43legacy_leds_init(struct b43legacy_wldev *dev)
 static inline void b43legacy_leds_exit(struct b43legacy_wldev *dev)
 {
 }
-#endif /* CONFIG_B43LEGACY_LEDS */
+#endif /* CONFIG_BACKPORT_B43LEGACY_LEDS */
 
 #endif /* B43legacy_LEDS_H_ */

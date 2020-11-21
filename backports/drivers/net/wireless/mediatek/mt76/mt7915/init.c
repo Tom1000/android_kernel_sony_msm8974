@@ -191,7 +191,7 @@ static const struct ieee80211_iface_limit if_limits[] = {
 	}, {
 		.max = MT7915_MAX_INTERFACES,
 		.types = BIT(NL80211_IFTYPE_AP) |
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CONFIG_BACKPORT_MAC80211_MESH
 			 BIT(NL80211_IFTYPE_MESH_POINT) |
 #endif
 			 BIT(NL80211_IFTYPE_STATION)
@@ -289,7 +289,7 @@ mt7915_set_stream_he_txbf_caps(struct ieee80211_sta_he_cap *he_cap,
 	struct ieee80211_he_mcs_nss_supp *mcs = &he_cap->he_mcs_nss_supp;
 	u8 c;
 
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CONFIG_BACKPORT_MAC80211_MESH
 	if (vif == NL80211_IFTYPE_MESH_POINT)
 		return;
 #endif
@@ -404,7 +404,7 @@ mt7915_init_he_caps(struct mt7915_phy *phy, enum nl80211_band band,
 		switch (i) {
 		case NL80211_IFTYPE_STATION:
 		case NL80211_IFTYPE_AP:
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CONFIG_BACKPORT_MAC80211_MESH
 		case NL80211_IFTYPE_MESH_POINT:
 #endif
 			break;
@@ -481,7 +481,7 @@ mt7915_init_he_caps(struct mt7915_phy *phy, enum nl80211_band band,
 			he_cap_elem->phy_cap_info[9] |=
 				IEEE80211_HE_PHY_CAP9_TX_1024_QAM_LESS_THAN_242_TONE_RU;
 			break;
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CONFIG_BACKPORT_MAC80211_MESH
 		case NL80211_IFTYPE_MESH_POINT:
 			break;
 #endif

@@ -249,10 +249,10 @@ struct wcn36xx {
 	/* RF module */
 	unsigned		rf_id;
 
-#ifdef CONFIG_WCN36XX_DEBUGFS
+#ifdef CONFIG_BACKPORT_WCN36XX_DEBUGFS
 	/* Debug file system entry */
 	struct wcn36xx_dfs_entry    dfs;
-#endif /* CONFIG_WCN36XX_DEBUGFS */
+#endif /* CONFIG_BACKPORT_WCN36XX_DEBUGFS */
 
 };
 

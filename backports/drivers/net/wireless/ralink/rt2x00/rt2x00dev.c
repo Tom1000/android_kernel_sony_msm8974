@@ -1315,7 +1315,7 @@ static inline void rt2x00lib_set_if_combinations(struct rt2x00_dev *rt2x00dev)
 	if_limit = &rt2x00dev->if_limits_ap;
 	if_limit->max = rt2x00dev->ops->max_ap_intf;
 	if_limit->types = BIT(NL80211_IFTYPE_AP);
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CONFIG_BACKPORT_MAC80211_MESH
 	if_limit->types |= BIT(NL80211_IFTYPE_MESH_POINT);
 #endif
 
@@ -1435,10 +1435,10 @@ int rt2x00lib_probe_dev(struct rt2x00_dev *rt2x00dev)
 	if (rt2x00dev->bcn->limit > 0)
 		rt2x00dev->hw->wiphy->interface_modes |=
 		    BIT(NL80211_IFTYPE_ADHOC) |
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CONFIG_BACKPORT_MAC80211_MESH
 		    BIT(NL80211_IFTYPE_MESH_POINT) |
 #endif
-#ifdef CONFIG_WIRELESS_WDS
+#ifdef CONFIG_BACKPORT_WIRELESS_WDS
 		    BIT(NL80211_IFTYPE_WDS) |
 #endif
 		    BIT(NL80211_IFTYPE_AP);

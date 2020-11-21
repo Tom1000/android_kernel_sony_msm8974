@@ -1,7 +1,7 @@
 # SPDX-License-Identifier: GPL-2.0-only
-obj-$(CONFIG_MT76x2_COMMON) += mt76x2-common.o
-obj-$(CONFIG_MT76x2E) += mt76x2e.o
-obj-$(CONFIG_MT76x2U) += mt76x2u.o
+obj-$(CONFIG_BACKPORT_MT76x2_COMMON) += mt76x2-common.o
+obj-$(CONFIG_BACKPORT_MT76x2E) += mt76x2e.o
+obj-$(CONFIG_BACKPORT_MT76x2U) += mt76x2u.o
 
 mt76x2-common-y := \
 	eeprom.o mac.o init.o phy.o mcu.o

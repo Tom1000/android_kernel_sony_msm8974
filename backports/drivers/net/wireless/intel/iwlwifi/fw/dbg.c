@@ -2792,7 +2792,7 @@ void iwl_fw_dbg_stop_restart_recording(struct iwl_fw_runtime *fwrt,
 		iwl_fw_dbg_stop_recording(fwrt->trans, params);
 	else
 		ret = iwl_fw_dbg_restart_recording(fwrt->trans, params);
-#ifdef CONFIG_IWLWIFI_DEBUGFS
+#ifdef CONFIG_BACKPORT_IWLWIFI_DEBUGFS
 	if (!ret) {
 		if (stop)
 			fwrt->trans->dbg.rec_on = false;

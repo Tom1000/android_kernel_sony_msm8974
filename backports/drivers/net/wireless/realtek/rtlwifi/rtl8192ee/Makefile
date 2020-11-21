@@ -12,4 +12,4 @@ rtl8192ee-objs :=		\
 		trx.o		\
 
 
-obj-$(CONFIG_RTL8192EE) += rtl8192ee.o
+obj-$(CONFIG_BACKPORT_RTL8192EE) += rtl8192ee.o

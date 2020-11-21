@@ -4,4 +4,4 @@
 # All rights reserved.
 #
 
-obj-$(CONFIG_QTNFMAC)	+= qtnfmac/
+obj-$(CONFIG_BACKPORT_QTNFMAC)	+= qtnfmac/

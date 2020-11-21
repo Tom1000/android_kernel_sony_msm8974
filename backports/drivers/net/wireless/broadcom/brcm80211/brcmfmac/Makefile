@@ -6,10 +6,10 @@
 #
 
 ccflags-y += \
-	-I $(srctree)/$(src) \
-	-I $(srctree)/$(src)/../include
+	-I $(src) \
+	-I $(src)/../include
 
-obj-$(CONFIG_BRCMFMAC) += brcmfmac.o
+obj-$(CONFIG_BACKPORT_BRCMFMAC) += brcmfmac.o
 brcmfmac-objs += \
 		cfg80211.o \
 		chip.o \
@@ -24,23 +24,23 @@ brcmfmac-objs += \
 		btcoex.o \
 		vendor.o \
 		pno.o
-brcmfmac-$(CONFIG_BRCMFMAC_PROTO_BCDC) += \
+brcmfmac-$(CONFIG_BACKPORT_BRCMFMAC_PROTO_BCDC) += \
 		bcdc.o \
 		fwsignal.o
-brcmfmac-$(CONFIG_BRCMFMAC_PROTO_MSGBUF) += \
+brcmfmac-$(CONFIG_BACKPORT_BRCMFMAC_PROTO_MSGBUF) += \
 		commonring.o \
 		flowring.o \
 		msgbuf.o
-brcmfmac-$(CONFIG_BRCMFMAC_SDIO) += \
+brcmfmac-$(CONFIG_BACKPORT_BRCMFMAC_SDIO) += \
 		sdio.o \
 		bcmsdh.o
-brcmfmac-$(CONFIG_BRCMFMAC_USB) += \
+brcmfmac-$(CONFIG_BACKPORT_BRCMFMAC_USB) += \
 		usb.o
-brcmfmac-$(CONFIG_BRCMFMAC_PCIE) += \
+brcmfmac-$(CONFIG_BACKPORT_BRCMFMAC_PCIE) += \
 		pcie.o
-brcmfmac-$(CONFIG_BRCMDBG) += \
+brcmfmac-$(CONFIG_BACKPORT_BRCMDBG) += \
 		debug.o
-brcmfmac-$(CONFIG_BRCM_TRACING) += \
+brcmfmac-$(CONFIG_BACKPORT_BRCM_TRACING) += \
 		tracepoint.o
 brcmfmac-$(CONFIG_OF) += \
 		of.o

@@ -682,7 +682,7 @@ void __cfg80211_connect_result(struct net_device *dev,
 {
 	struct wireless_dev *wdev = dev->ieee80211_ptr;
 	const u8 *country_ie;
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CONFIG_BACKPORT_CFG80211_WEXT
 	union iwreq_data wrqu;
 #endif
 
@@ -698,7 +698,7 @@ void __cfg80211_connect_result(struct net_device *dev,
 	nl80211_send_connect_result(wiphy_to_rdev(wdev->wiphy), dev, cr,
 				    GFP_KERNEL);
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CONFIG_BACKPORT_CFG80211_WEXT
 	if (wextev) {
 		if (cr->req_ie && cr->status == WLAN_STATUS_SUCCESS) {
 			memset(&wrqu, 0, sizeof(wrqu));
@@ -900,7 +900,7 @@ EXPORT_SYMBOL(cfg80211_connect_done);
 void __cfg80211_roamed(struct wireless_dev *wdev,
 		       struct cfg80211_roam_info *info)
 {
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CONFIG_BACKPORT_CFG80211_WEXT
 	union iwreq_data wrqu;
 #endif
 	ASSERT_WDEV_LOCK(wdev);
@@ -926,7 +926,7 @@ void __cfg80211_roamed(struct wireless_dev *wdev,
 	nl80211_send_roamed(wiphy_to_rdev(wdev->wiphy),
 			    wdev->netdev, info, GFP_KERNEL);
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CONFIG_BACKPORT_CFG80211_WEXT
 	if (info->req_ie) {
 		memset(&wrqu, 0, sizeof(wrqu));
 		wrqu.data.length = info->req_ie_len;
@@ -1080,7 +1080,7 @@ void __cfg80211_disconnected(struct net_device *dev, const u8 *ie,
 	struct wireless_dev *wdev = dev->ieee80211_ptr;
 	struct cfg80211_registered_device *rdev = wiphy_to_rdev(wdev->wiphy);
 	int i;
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CONFIG_BACKPORT_CFG80211_WEXT
 	union iwreq_data wrqu;
 #endif
 
@@ -1129,7 +1129,7 @@ void __cfg80211_disconnected(struct net_device *dev, const u8 *ie,
 
 	rdev_set_qos_map(rdev, dev, NULL);
 
-#ifdef CONFIG_CFG80211_WEXT
+#ifdef CONFIG_BACKPORT_CFG80211_WEXT
 	memset(&wrqu, 0, sizeof(wrqu));
 	wrqu.ap_addr.sa_family = ARPHRD_ETHER;
 	wireless_send_event(dev, SIOCGIWAP, &wrqu, NULL);

@@ -11,9 +11,9 @@ NOSTDINC_FLAGS := \
 	-I$(M)/include/uapi \
 	-include $(M)/backport-include/backport/backport.h \
 	$(call backport-cc-disable-warning, unused-but-set-variable) \
-	-DCPTCFG_VERSION=\"$(BACKPORTS_VERSION)\" \
-	-DCPTCFG_KERNEL_VERSION=\"$(BACKPORTED_KERNEL_VERSION)\" \
-	-DCPTCFG_KERNEL_NAME=\"$(BACKPORTED_KERNEL_NAME)\" \
+	-DCONFIG_BACKPORT_VERSION=\"$(BACKPORTS_VERSION)\" \
+	-DCONFIG_BACKPORT_KERNEL_VERSION=\"$(BACKPORTED_KERNEL_VERSION)\" \
+	-DCONFIG_BACKPORT_KERNEL_NAME=\"$(BACKPORTED_KERNEL_NAME)\" \
 	$(BACKPORTS_GIT_TRACKER_DEF) \
 	$(CFLAGS)
 
@@ -31,20 +31,20 @@ NOSTDINC_FLAGS := \
 endif
 
 subdir-ccflags-y := $(call cc-option, -fno-pie) $(call cc-option, -no-pie)
-ifeq ($(CPTCFG_KERNEL_4_3),y)
+ifeq ($(CONFIG_BACKPORT_KERNEL_4_3),y)
 subdir-ccflags-y += -Wno-pointer-sign
 endif
 
 obj-y += compat/
 
-obj-$(CPTCFG_CFG80211) += net/wireless/
-obj-$(CPTCFG_MAC80211) += net/mac80211/
-obj-$(CPTCFG_WLAN) += drivers/net/wireless/
-obj-$(CPTCFG_SSB) += drivers/ssb/
-obj-$(CPTCFG_BCMA) += drivers/bcma/
-obj-$(CPTCFG_USB_NET_RNDIS_WLAN) += drivers/net/usb/
+obj-$(CONFIG_BACKPORT_CFG80211) += net/wireless/
+obj-$(CONFIG_BACKPORT_MAC80211) += net/mac80211/
+obj-$(CONFIG_BACKPORT_WLAN) += drivers/net/wireless/
+obj-$(CONFIG_BACKPORT_SSB) += drivers/ssb/
+obj-$(CONFIG_BACKPORT_BCMA) += drivers/bcma/
+obj-$(CONFIG_BACKPORT_USB_NET_RNDIS_WLAN) += drivers/net/usb/
 
-obj-$(CPTCFG_USB_WDM) += drivers/usb/class/
-obj-$(CPTCFG_USB_USBNET) += drivers/net/usb/
+obj-$(CONFIG_BACKPORT_USB_WDM) += drivers/usb/class/
+obj-$(CONFIG_BACKPORT_USB_USBNET) += drivers/net/usb/
 
-obj-$(CPTCFG_STAGING) += drivers/staging/
+obj-$(CONFIG_BACKPORT_STAGING) += drivers/staging/

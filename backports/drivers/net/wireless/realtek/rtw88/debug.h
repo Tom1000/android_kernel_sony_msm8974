@@ -23,7 +23,7 @@ enum rtw_debug_mask {
 	RTW_DBG_ALL		= 0xffffffff
 };
 
-#ifdef CONFIG_RTW88_DEBUGFS
+#ifdef CONFIG_BACKPORT_RTW88_DEBUGFS
 
 void rtw_debugfs_init(struct rtw_dev *rtwdev);
 
@@ -31,9 +31,9 @@ void rtw_debugfs_init(struct rtw_dev *rtwdev);
 
 static inline void rtw_debugfs_init(struct rtw_dev *rtwdev) {}
 
-#endif /* CONFIG_RTW88_DEBUGFS */
+#endif /* CONFIG_BACKPORT_RTW88_DEBUGFS */
 
-#ifdef CONFIG_RTW88_DEBUG
+#ifdef CONFIG_BACKPORT_RTW88_DEBUG
 
 __printf(3, 4)
 void __rtw_dbg(struct rtw_dev *rtwdev, enum rtw_debug_mask mask,
@@ -46,7 +46,7 @@ void __rtw_dbg(struct rtw_dev *rtwdev, enum rtw_debug_mask mask,
 static inline void rtw_dbg(struct rtw_dev *rtwdev, enum rtw_debug_mask mask,
 			   const char *fmt, ...) {}
 
-#endif /* CONFIG_RTW88_DEBUG */
+#endif /* CONFIG_BACKPORT_RTW88_DEBUG */
 
 #define rtw_info(rtwdev, a...) dev_info(rtwdev->dev, ##a)
 #define rtw_warn(rtwdev, a...) dev_warn(rtwdev->dev, ##a)

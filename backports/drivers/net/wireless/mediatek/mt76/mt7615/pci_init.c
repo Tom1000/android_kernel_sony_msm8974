@@ -119,7 +119,7 @@ int mt7615_register_device(struct mt7615_dev *dev)
 	mt7615_init_device(dev);
 
 	/* init led callbacks */
-	if (IS_ENABLED(CONFIG_MT76_LEDS)) {
+	if (IS_ENABLED(CONFIG_BACKPORT_MT76_LEDS)) {
 		dev->mt76.led_cdev.brightness_set = mt7615_led_set_brightness;
 		dev->mt76.led_cdev.blink_set = mt7615_led_set_blink;
 	}

@@ -1,5 +1,5 @@
 # SPDX-License-Identifier: GPL-2.0-only
-obj-$(CONFIG_MT7601U)	+= mt7601u.o
+obj-$(CONFIG_BACKPORT_MT7601U)	+= mt7601u.o
 
 mt7601u-objs	= \
 	usb.o init.o main.o mcu.o trace.o dma.o core.o eeprom.o phy.o \

@@ -521,7 +521,7 @@ static int recv_decache(struct recv_frame *precv_frame, u8 bretry,
 static void process_pwrbit_data(struct adapter *padapter,
 				struct recv_frame *precv_frame)
 {
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CONFIG_BACKPORT_88EU_AP_MODE
 	unsigned char pwrbit;
 	u8 *ptr = precv_frame->pkt->data;
 	struct rx_pkt_attrib *pattrib = &precv_frame->attrib;
@@ -548,7 +548,7 @@ static void process_pwrbit_data(struct adapter *padapter,
 static void process_wmmps_data(struct adapter *padapter,
 			       struct recv_frame *precv_frame)
 {
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CONFIG_BACKPORT_88EU_AP_MODE
 	struct rx_pkt_attrib *pattrib = &precv_frame->attrib;
 	struct sta_priv *pstapriv = &padapter->stapriv;
 	struct sta_info *psta = NULL;
@@ -862,7 +862,7 @@ exit:
 static int validate_recv_ctrl_frame(struct adapter *padapter,
 				    struct recv_frame *precv_frame)
 {
-#ifdef CONFIG_88EU_AP_MODE
+#ifdef CONFIG_BACKPORT_88EU_AP_MODE
 	struct rx_pkt_attrib *pattrib = &precv_frame->attrib;
 	struct sta_priv *pstapriv = &padapter->stapriv;
 	u8 *pframe = precv_frame->pkt->data;

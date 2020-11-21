@@ -326,7 +326,7 @@ ieee80211_tx_h_check_assoc(struct ieee80211_tx_data *tx)
 	if (likely(tx->flags & IEEE80211_TX_UNICAST)) {
 		if (unlikely(!assoc &&
 			     ieee80211_is_data(hdr->frame_control))) {
-#ifdef CONFIG_MAC80211_VERBOSE_DEBUG
+#ifdef CONFIG_BACKPORT_MAC80211_VERBOSE_DEBUG
 			sdata_info(tx->sdata,
 				   "dropped data frame to not associated station %pM\n",
 				   hdr->addr1);
@@ -1636,7 +1636,7 @@ static bool ieee80211_tx_frags(struct ieee80211_local *local,
 		struct ieee80211_tx_info *info = IEEE80211_SKB_CB(skb);
 		int q = info->hw_queue;
 
-#ifdef CONFIG_MAC80211_VERBOSE_DEBUG
+#ifdef CONFIG_BACKPORT_MAC80211_VERBOSE_DEBUG
 		if (WARN_ON_ONCE(q >= local->hw.queues)) {
 			__skb_unlink(skb, skbs);
 			ieee80211_free_txskb(&local->hw, skb);
@@ -2395,7 +2395,7 @@ int ieee80211_lookup_ra_sta(struct ieee80211_sub_if_data *sdata,
 	case NL80211_IFTYPE_WDS:
 		sta = sta_info_get(sdata, sdata->u.wds.remote_addr);
 		break;
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CONFIG_BACKPORT_MAC80211_MESH
 	case NL80211_IFTYPE_MESH_POINT:
 		/* determined much later */
 		*sta_out = NULL;
@@ -2519,7 +2519,7 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
 	if (IS_ERR(sta))
 		sta = NULL;
 
-#ifdef CONFIG_MAC80211_DEBUGFS
+#ifdef CONFIG_BACKPORT_MAC80211_DEBUGFS
 	if (local->force_tx_status)
 		info_flags |= IEEE80211_TX_CTL_REQ_TX_STATUS;
 #endif
@@ -2582,7 +2582,7 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
 		 */
 		band = local->hw.conf.chandef.chan->band;
 		break;
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CONFIG_BACKPORT_MAC80211_MESH
 	case NL80211_IFTYPE_MESH_POINT:
 		if (!is_multicast_ether_addr(skb->data)) {
 			struct sta_info *next_hop;
@@ -2755,7 +2755,7 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
 		     !multicast && !authorized &&
 		     (cpu_to_be16(ethertype) != sdata->control_port_protocol ||
 		      !ether_addr_equal(sdata->vif.addr, skb->data + ETH_ALEN)))) {
-#ifdef CONFIG_MAC80211_VERBOSE_DEBUG
+#ifdef CONFIG_BACKPORT_MAC80211_VERBOSE_DEBUG
 		net_info_ratelimited("%s: dropped frame to %pM (unauthorized port)\n",
 				    sdata->name, hdr.addr1);
 #endif
@@ -2837,7 +2837,7 @@ static struct sk_buff *ieee80211_build_hdr(struct ieee80211_sub_if_data *sdata,
 	if (encaps_data)
 		memcpy(skb_push(skb, encaps_len), encaps_data, encaps_len);
 
-#ifdef CONFIG_MAC80211_MESH
+#ifdef CONFIG_BACKPORT_MAC80211_MESH
 	if (meshhdrlen > 0)
 		memcpy(skb_push(skb, meshhdrlen), &mesh_hdr, meshhdrlen);
 #endif
@@ -3521,7 +3521,7 @@ static bool ieee80211_xmit_fast(struct ieee80211_sub_if_data *sdata,
 		      (tid_tx ? IEEE80211_TX_CTL_AMPDU : 0);
 	info->control.flags = IEEE80211_TX_CTRL_FAST_XMIT;
 
-#ifdef CONFIG_MAC80211_DEBUGFS
+#ifdef CONFIG_BACKPORT_MAC80211_DEBUGFS
 	if (local->force_tx_status)
 		info->flags |= IEEE80211_TX_CTL_REQ_TX_STATUS;
 #endif

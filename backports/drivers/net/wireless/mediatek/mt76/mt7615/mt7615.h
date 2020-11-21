@@ -375,7 +375,7 @@ extern const u32 mt7663e_reg_map[__MT_BASE_MAX];
 extern struct pci_driver mt7615_pci_driver;
 extern struct platform_driver mt7622_wmac_driver;
 
-#ifdef CONFIG_MT7622_WMAC
+#ifdef CONFIG_BACKPORT_MT7622_WMAC
 int mt7622_wmac_init(struct mt7615_dev *dev);
 #else
 static inline int mt7622_wmac_init(struct mt7615_dev *dev)
@@ -421,7 +421,7 @@ int mt7615_mcu_fw_log_2_host(struct mt7615_dev *dev, u8 ctrl);
 
 static inline bool is_mt7622(struct mt76_dev *dev)
 {
-	if (!IS_ENABLED(CONFIG_MT7622_WMAC))
+	if (!IS_ENABLED(CONFIG_BACKPORT_MT7622_WMAC))
 		return false;
 
 	return mt76_chip(dev) == 0x7622;

@@ -85,7 +85,7 @@ void ath10k_debug_print_board_info(struct ath10k *ar);
 void ath10k_debug_print_boot_info(struct ath10k *ar);
 void ath10k_print_driver_info(struct ath10k *ar);
 
-#ifdef CONFIG_ATH10K_DEBUGFS
+#ifdef CONFIG_BACKPORT_ATH10K_DEBUGFS
 int ath10k_debug_start(struct ath10k *ar);
 void ath10k_debug_stop(struct ath10k *ar);
 int ath10k_debug_create(struct ath10k *ar);
@@ -206,8 +206,8 @@ static inline int ath10k_debug_fw_stats_request(struct ath10k *ar)
 #define ath10k_debug_get_et_sset_count NULL
 #define ath10k_debug_get_et_stats NULL
 
-#endif /* CONFIG_ATH10K_DEBUGFS */
-#ifdef CONFIG_MAC80211_DEBUGFS
+#endif /* CONFIG_BACKPORT_ATH10K_DEBUGFS */
+#ifdef CONFIG_BACKPORT_MAC80211_DEBUGFS
 void ath10k_sta_add_debugfs(struct ieee80211_hw *hw, struct ieee80211_vif *vif,
 			    struct ieee80211_sta *sta, struct dentry *dir);
 void ath10k_sta_update_rx_duration(struct ath10k *ar,
@@ -248,9 +248,9 @@ void ath10k_sta_update_rx_tid_stats_ampdu(struct ath10k *ar,
 					  int num_ranges)
 {
 }
-#endif /* CONFIG_MAC80211_DEBUGFS */
+#endif /* CONFIG_BACKPORT_MAC80211_DEBUGFS */
 
-#ifdef CONFIG_ATH10K_DEBUG
+#ifdef CONFIG_BACKPORT_ATH10K_DEBUG
 __printf(3, 4) void __ath10k_dbg(struct ath10k *ar,
 				 enum ath10k_debug_mask mask,
 				 const char *fmt, ...);
@@ -258,7 +258,7 @@ void ath10k_dbg_dump(struct ath10k *ar,
 		     enum ath10k_debug_mask mask,
 		     const char *msg, const char *prefix,
 		     const void *buf, size_t len);
-#else /* CONFIG_ATH10K_DEBUG */
+#else /* CONFIG_BACKPORT_ATH10K_DEBUG */
 
 static inline int __ath10k_dbg(struct ath10k *ar,
 			       enum ath10k_debug_mask dbg_mask,
@@ -273,7 +273,7 @@ static inline void ath10k_dbg_dump(struct ath10k *ar,
 				   const void *buf, size_t len)
 {
 }
-#endif /* CONFIG_ATH10K_DEBUG */
+#endif /* CONFIG_BACKPORT_ATH10K_DEBUG */
 
 /* Avoid calling __ath10k_dbg() if debug_mask is not set and tracing
  * disabled.

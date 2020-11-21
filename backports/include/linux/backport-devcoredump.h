@@ -51,7 +51,7 @@ static inline void _devcd_free_sgtable(struct scatterlist *table)
 }
 
 
-#ifdef CPTCFG_BPAUTO_WANT_DEV_COREDUMP
+#ifdef CONFIG_BACKPORT_BPAUTO_WANT_DEV_COREDUMP
 void dev_coredumpv(struct device *dev, void *data, size_t datalen,
 		   gfp_t gfp);
 
@@ -85,6 +85,6 @@ static inline void dev_coredumpsg(struct device *dev, struct scatterlist *table,
 {
 	_devcd_free_sgtable(table);
 }
-#endif /* CPTCFG_BPAUTO_WANT_DEV_COREDUMP */
+#endif /* CONFIG_BACKPORT_BPAUTO_WANT_DEV_COREDUMP */
 
 #endif /* __DEVCOREDUMP_H */

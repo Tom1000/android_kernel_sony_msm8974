@@ -5,7 +5,7 @@
 
 #include <backport/leds-disabled.h>
 
-#ifndef CPTCFG_BPAUTO_BUILD_LEDS
+#ifndef CONFIG_BACKPORT_BPAUTO_BUILD_LEDS
 #if LINUX_VERSION_IS_LESS(3,6,0)
 /*
  * Backports
@@ -28,7 +28,7 @@
  */
 #define led_set_brightness(_dev, _switch) led_brightness_set(_dev, _switch)
 #endif /* LINUX_VERSION_IS_LESS(3,6,0) */
-#endif /* CPTCFG_BPAUTO_BUILD_LEDS */
+#endif /* CONFIG_BACKPORT_BPAUTO_BUILD_LEDS */
 
 #if LINUX_VERSION_IS_LESS(4,2,0)
 /*
