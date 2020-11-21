@@ -2679,7 +2679,7 @@ static int nl80211_dump_wiphy(struct sk_buff *skb, struct netlink_callback *cb)
 		do {
 			ret = nl80211_send_wiphy(rdev, NL80211_CMD_NEW_WIPHY,
 						 skb,
-						 NETLINK_CB(cb->skb).portid,
+						 NETLINK_CB_PORTID(cb->skb),
 						 cb->nlh->nlmsg_seq,
 						 NLM_F_MULTI, state);
 			if (ret < 0) {
@@ -2736,7 +2736,7 @@ static int nl80211_get_wiphy(struct sk_buff *skb, struct genl_info *info)
 		return -ENOMEM;
 
 	if (nl80211_send_wiphy(rdev, NL80211_CMD_NEW_WIPHY, msg,
-			       info->snd_portid, info->snd_seq, 0,
+			       genl_info_snd_portid(info), info->snd_seq, 0,
 			       &state) < 0) {
 		nlmsg_free(msg);
 		return -ENOBUFS;
@@ -3489,7 +3489,7 @@ static int nl80211_dump_interface(struct sk_buff *skb, struct netlink_callback *
 				if_idx++;
 				continue;
 			}
-			if (nl80211_send_iface(skb, NETLINK_CB(cb->skb).portid,
+			if (nl80211_send_iface(skb, NETLINK_CB_PORTID(cb->skb),
 					       cb->nlh->nlmsg_seq, NLM_F_MULTI,
 					       rdev, wdev,
 					       NL80211_CMD_NEW_INTERFACE) < 0) {
@@ -3521,7 +3521,7 @@ static int nl80211_get_interface(struct sk_buff *skb, struct genl_info *info)
 	if (!msg)
 		return -ENOMEM;
 
-	if (nl80211_send_iface(msg, info->snd_portid, info->snd_seq, 0,
+	if (nl80211_send_iface(msg, genl_info_snd_portid(info), info->snd_seq, 0,
 			       rdev, wdev, NL80211_CMD_NEW_INTERFACE) < 0) {
 		nlmsg_free(msg);
 		return -ENOBUFS;
@@ -3782,7 +3782,7 @@ static int nl80211_new_interface(struct sk_buff *skb, struct genl_info *info)
 	}
 
 	if (info->attrs[NL80211_ATTR_SOCKET_OWNER])
-		wdev->owner_nlportid = info->snd_portid;
+		wdev->owner_nlportid = genl_info_snd_portid(info);
 
 	switch (type) {
 	case NL80211_IFTYPE_MESH_POINT:
@@ -3809,7 +3809,7 @@ static int nl80211_new_interface(struct sk_buff *skb, struct genl_info *info)
 		break;
 	}
 
-	if (nl80211_send_iface(msg, info->snd_portid, info->snd_seq, 0,
+	if (nl80211_send_iface(msg, genl_info_snd_portid(info), info->snd_seq, 0,
 			       rdev, wdev, NL80211_CMD_NEW_INTERFACE) < 0) {
 		nlmsg_free(msg);
 		return -ENOBUFS;
@@ -3960,7 +3960,8 @@ static int nl80211_get_key(struct sk_buff *skb, struct genl_info *info)
 	if (!msg)
 		return -ENOMEM;
 
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_NEW_KEY);
 	if (!hdr)
 		goto nla_put_failure;
@@ -5049,7 +5050,7 @@ static int nl80211_start_ap(struct sk_buff *skb, struct genl_info *info)
 		memcpy(wdev->ssid, params.ssid, wdev->ssid_len);
 
 		if (info->attrs[NL80211_ATTR_SOCKET_OWNER])
-			wdev->conn_owner_nlportid = info->snd_portid;
+			wdev->conn_owner_nlportid = genl_info_snd_portid(info);
 	}
 	wdev_unlock(wdev);
 
@@ -5542,7 +5543,7 @@ static int nl80211_dump_station(struct sk_buff *skb,
 			goto out_err;
 
 		if (nl80211_send_station(skb, NL80211_CMD_NEW_STATION,
-				NETLINK_CB(cb->skb).portid,
+				NETLINK_CB_PORTID(cb->skb),
 				cb->nlh->nlmsg_seq, NLM_F_MULTI,
 				rdev, wdev->netdev, mac_addr,
 				&sinfo) < 0)
@@ -5590,7 +5591,7 @@ static int nl80211_get_station(struct sk_buff *skb, struct genl_info *info)
 	}
 
 	if (nl80211_send_station(msg, NL80211_CMD_NEW_STATION,
-				 info->snd_portid, info->snd_seq, 0,
+				 genl_info_snd_portid(info), info->snd_seq, 0,
 				 rdev, dev, mac_addr, &sinfo) < 0) {
 		nlmsg_free(msg);
 		return -ENOBUFS;
@@ -6452,7 +6453,7 @@ static int nl80211_dump_mpath(struct sk_buff *skb,
 		if (err)
 			goto out_err;
 
-		if (nl80211_send_mpath(skb, NETLINK_CB(cb->skb).portid,
+		if (nl80211_send_mpath(skb, NETLINK_CB_PORTID(cb->skb),
 				       cb->nlh->nlmsg_seq, NLM_F_MULTI,
 				       wdev->netdev, dst, next_hop,
 				       &pinfo) < 0)
@@ -6500,7 +6501,7 @@ static int nl80211_get_mpath(struct sk_buff *skb, struct genl_info *info)
 	if (!msg)
 		return -ENOMEM;
 
-	if (nl80211_send_mpath(msg, info->snd_portid, info->snd_seq, 0,
+	if (nl80211_send_mpath(msg, genl_info_snd_portid(info), info->snd_seq, 0,
 				 dev, dst, next_hop, &pinfo) < 0) {
 		nlmsg_free(msg);
 		return -ENOBUFS;
@@ -6608,7 +6609,7 @@ static int nl80211_get_mpp(struct sk_buff *skb, struct genl_info *info)
 	if (!msg)
 		return -ENOMEM;
 
-	if (nl80211_send_mpath(msg, info->snd_portid, info->snd_seq, 0,
+	if (nl80211_send_mpath(msg, genl_info_snd_portid(info), info->snd_seq, 0,
 			       dev, dst, mpp, &pinfo) < 0) {
 		nlmsg_free(msg);
 		return -ENOBUFS;
@@ -6651,7 +6652,7 @@ static int nl80211_dump_mpp(struct sk_buff *skb,
 		if (err)
 			goto out_err;
 
-		if (nl80211_send_mpath(skb, NETLINK_CB(cb->skb).portid,
+		if (nl80211_send_mpath(skb, NETLINK_CB_PORTID(cb->skb),
 				       cb->nlh->nlmsg_seq, NLM_F_MULTI,
 				       wdev->netdev, dst, mpp,
 				       &pinfo) < 0)
@@ -6775,7 +6776,7 @@ static int nl80211_req_set_reg(struct sk_buff *skb, struct genl_info *info)
 		return regulatory_hint_user(data, user_reg_hint_type);
 	case NL80211_USER_REG_HINT_INDOOR:
 		if (info->attrs[NL80211_ATTR_SOCKET_OWNER]) {
-			owner_nlportid = info->snd_portid;
+			owner_nlportid = genl_info_snd_portid(info);
 			is_indoor = !!info->attrs[NL80211_ATTR_REG_INDOOR];
 		} else {
 			owner_nlportid = 0;
@@ -6826,7 +6827,8 @@ static int nl80211_get_mesh_config(struct sk_buff *skb,
 	msg = nlmsg_new(NLMSG_DEFAULT_SIZE, GFP_KERNEL);
 	if (!msg)
 		return -ENOMEM;
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_GET_MESH_CONFIG);
 	if (!hdr)
 		goto out;
@@ -7267,7 +7269,8 @@ static int nl80211_get_reg_do(struct sk_buff *skb, struct genl_info *info)
 	if (!msg)
 		return -ENOBUFS;
 
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_GET_REG);
 	if (!hdr)
 		goto put_failure;
@@ -7327,7 +7330,8 @@ static int nl80211_send_regdom(struct sk_buff *msg, struct netlink_callback *cb,
 			       u32 seq, int flags, struct wiphy *wiphy,
 			       const struct ieee80211_regdomain *regdom)
 {
-	void *hdr = nl80211hdr_put(msg, NETLINK_CB(cb->skb).portid, seq, flags,
+	void *hdr = nl80211hdr_put(msg, NETLINK_CB_PORTID(cb->skb), seq,
+				   flags,
 				   NL80211_CMD_GET_REG);
 
 	if (!hdr)
@@ -8555,7 +8559,7 @@ static int nl80211_start_sched_scan(struct sk_buff *skb,
 	sched_scan_req->wiphy = &rdev->wiphy;
 
 	if (info->attrs[NL80211_ATTR_SOCKET_OWNER])
-		sched_scan_req->owner_nlportid = info->snd_portid;
+		sched_scan_req->owner_nlportid = genl_info_snd_portid(info);
 
 	cfg80211_add_sched_scan_req(rdev, sched_scan_req);
 
@@ -8588,7 +8592,7 @@ static int nl80211_stop_sched_scan(struct sk_buff *skb,
 				     list);
 	if (!req || req->reqid ||
 	    (req->owner_nlportid &&
-	     req->owner_nlportid != info->snd_portid))
+	     req->owner_nlportid != genl_info_snd_portid(info)))
 		return -ENOENT;
 
 	return cfg80211_stop_sched_scan_req(rdev, req, false);
@@ -8889,7 +8893,7 @@ static int nl80211_send_bss(struct sk_buff *msg, struct netlink_callback *cb,
 
 	ASSERT_WDEV_LOCK(wdev);
 
-	hdr = nl80211hdr_put(msg, NETLINK_CB(cb->skb).portid, seq, flags,
+	hdr = nl80211hdr_put(msg, NETLINK_CB_PORTID(cb->skb), seq, flags,
 			     NL80211_CMD_NEW_SCAN_RESULTS);
 	if (!hdr)
 		return -1;
@@ -9187,7 +9191,7 @@ static int nl80211_dump_survey(struct sk_buff *skb, struct netlink_callback *cb)
 		}
 
 		if (nl80211_send_survey(skb,
-				NETLINK_CB(cb->skb).portid,
+				NETLINK_CB_PORTID(cb->skb),
 				cb->nlh->nlmsg_seq, NLM_F_MULTI,
 				wdev->netdev, radio_stats, &survey) < 0)
 			goto out;
@@ -9475,7 +9479,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
 	u32 freq;
 
 	if (dev->ieee80211_ptr->conn_owner_nlportid &&
-	    dev->ieee80211_ptr->conn_owner_nlportid != info->snd_portid)
+	    dev->ieee80211_ptr->conn_owner_nlportid != genl_info_snd_portid(info))
 		return -EPERM;
 
 	if (!info->attrs[NL80211_ATTR_MAC] ||
@@ -9580,7 +9584,7 @@ static int nl80211_associate(struct sk_buff *skb, struct genl_info *info)
 
 		if (!err && info->attrs[NL80211_ATTR_SOCKET_OWNER]) {
 			dev->ieee80211_ptr->conn_owner_nlportid =
-				info->snd_portid;
+				genl_info_snd_portid(info);
 			memcpy(dev->ieee80211_ptr->disconnect_bssid,
 			       bssid, ETH_ALEN);
 		}
@@ -9601,7 +9605,7 @@ static int nl80211_deauthenticate(struct sk_buff *skb, struct genl_info *info)
 	bool local_state_change;
 
 	if (dev->ieee80211_ptr->conn_owner_nlportid &&
-	    dev->ieee80211_ptr->conn_owner_nlportid != info->snd_portid)
+	    dev->ieee80211_ptr->conn_owner_nlportid != genl_info_snd_portid(info))
 		return -EPERM;
 
 	if (!info->attrs[NL80211_ATTR_MAC])
@@ -9649,7 +9653,7 @@ static int nl80211_disassociate(struct sk_buff *skb, struct genl_info *info)
 	bool local_state_change;
 
 	if (dev->ieee80211_ptr->conn_owner_nlportid &&
-	    dev->ieee80211_ptr->conn_owner_nlportid != info->snd_portid)
+	    dev->ieee80211_ptr->conn_owner_nlportid != genl_info_snd_portid(info))
 		return -EPERM;
 
 	if (!info->attrs[NL80211_ATTR_MAC])
@@ -9865,7 +9869,7 @@ static int nl80211_join_ibss(struct sk_buff *skb, struct genl_info *info)
 	if (err)
 		kzfree(connkeys);
 	else if (info->attrs[NL80211_ATTR_SOCKET_OWNER])
-		dev->ieee80211_ptr->conn_owner_nlportid = info->snd_portid;
+		dev->ieee80211_ptr->conn_owner_nlportid = genl_info_snd_portid(info);
 	wdev_unlock(dev->ieee80211_ptr);
 
 	return err;
@@ -10127,7 +10131,7 @@ static int nl80211_testmode_dump(struct sk_buff *skb,
 	}
 
 	while (1) {
-		void *hdr = nl80211hdr_put(skb, NETLINK_CB(cb->skb).portid,
+		void *hdr = nl80211hdr_put(skb, NETLINK_CB_PORTID(cb->skb),
 					   cb->nlh->nlmsg_seq, NLM_F_MULTI,
 					   NL80211_CMD_TESTMODE);
 		struct nlattr *tmdata;
@@ -10397,7 +10401,7 @@ static int nl80211_connect(struct sk_buff *skb, struct genl_info *info)
 		kzfree(connkeys);
 
 	if (!err && info->attrs[NL80211_ATTR_SOCKET_OWNER]) {
-		dev->ieee80211_ptr->conn_owner_nlportid = info->snd_portid;
+		dev->ieee80211_ptr->conn_owner_nlportid = genl_info_snd_portid(info);
 		if (connect.bssid)
 			memcpy(dev->ieee80211_ptr->disconnect_bssid,
 			       connect.bssid, ETH_ALEN);
@@ -10500,7 +10504,7 @@ static int nl80211_disconnect(struct sk_buff *skb, struct genl_info *info)
 	int ret;
 
 	if (dev->ieee80211_ptr->conn_owner_nlportid &&
-	    dev->ieee80211_ptr->conn_owner_nlportid != info->snd_portid)
+	    dev->ieee80211_ptr->conn_owner_nlportid != genl_info_snd_portid(info))
 		return -EPERM;
 
 	if (!info->attrs[NL80211_ATTR_REASON_CODE])
@@ -10743,7 +10747,8 @@ static int nl80211_remain_on_channel(struct sk_buff *skb,
 	if (!msg)
 		return -ENOMEM;
 
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_REMAIN_ON_CHANNEL);
 	if (!hdr) {
 		err = -ENOBUFS;
@@ -10847,7 +10852,8 @@ static int nl80211_register_mgmt(struct sk_buff *skb, struct genl_info *info)
 		return -EOPNOTSUPP;
 	}
 
-	return cfg80211_mlme_register_mgmt(wdev, info->snd_portid, frame_type,
+	return cfg80211_mlme_register_mgmt(wdev, genl_info_snd_portid(info),
+					   frame_type,
 					   nla_data(info->attrs[NL80211_ATTR_FRAME_MATCH]),
 					   nla_len(info->attrs[NL80211_ATTR_FRAME_MATCH]),
 					   info->attrs[NL80211_ATTR_RECEIVE_MULTICAST],
@@ -10958,7 +10964,8 @@ static int nl80211_tx_mgmt(struct sk_buff *skb, struct genl_info *info)
 		if (!msg)
 			return -ENOMEM;
 
-		hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+		hdr = nl80211hdr_put(msg, genl_info_snd_portid(info),
+				     info->snd_seq, 0,
 				     NL80211_CMD_FRAME);
 		if (!hdr) {
 			err = -ENOBUFS;
@@ -11069,7 +11076,8 @@ static int nl80211_get_power_save(struct sk_buff *skb, struct genl_info *info)
 	if (!msg)
 		return -ENOMEM;
 
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_GET_POWER_SAVE);
 	if (!hdr) {
 		err = -ENOBUFS;
@@ -11437,7 +11445,7 @@ static int nl80211_join_mesh(struct sk_buff *skb, struct genl_info *info)
 	wdev_lock(dev->ieee80211_ptr);
 	err = __cfg80211_join_mesh(rdev, dev, &setup, &cfg);
 	if (!err && info->attrs[NL80211_ATTR_SOCKET_OWNER])
-		dev->ieee80211_ptr->conn_owner_nlportid = info->snd_portid;
+		dev->ieee80211_ptr->conn_owner_nlportid = genl_info_snd_portid(info);
 	wdev_unlock(dev->ieee80211_ptr);
 
 	return err;
@@ -11641,7 +11649,8 @@ static int nl80211_get_wowlan(struct sk_buff *skb, struct genl_info *info)
 	if (!msg)
 		return -ENOMEM;
 
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_GET_WOWLAN);
 	if (!hdr)
 		goto nla_put_failure;
@@ -12145,7 +12154,8 @@ static int nl80211_get_coalesce(struct sk_buff *skb, struct genl_info *info)
 	if (!msg)
 		return -ENOMEM;
 
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_GET_COALESCE);
 	if (!hdr)
 		goto nla_put_failure;
@@ -12410,7 +12420,7 @@ static int nl80211_register_unexpected_frame(struct sk_buff *skb,
 	if (wdev->ap_unexpected_nlportid)
 		return -EBUSY;
 
-	wdev->ap_unexpected_nlportid = info->snd_portid;
+	wdev->ap_unexpected_nlportid = genl_info_snd_portid(info);
 	return 0;
 }
 
@@ -12440,7 +12450,8 @@ static int nl80211_probe_client(struct sk_buff *skb,
 	if (!msg)
 		return -ENOMEM;
 
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_PROBE_CLIENT);
 	if (!hdr) {
 		err = -ENOBUFS;
@@ -12484,13 +12495,13 @@ static int nl80211_register_beacons(struct sk_buff *skb, struct genl_info *info)
 	/* First, check if already registered. */
 	spin_lock_bh(&rdev->beacon_registrations_lock);
 	list_for_each_entry(reg, &rdev->beacon_registrations, list) {
-		if (reg->nlportid == info->snd_portid) {
+		if (reg->nlportid == genl_info_snd_portid(info)) {
 			rv = -EALREADY;
 			goto out_err;
 		}
 	}
 	/* Add it to the list */
-	nreg->nlportid = info->snd_portid;
+	nreg->nlportid = genl_info_snd_portid(info);
 	list_add(&nreg->list, &rdev->beacon_registrations);
 
 	spin_unlock_bh(&rdev->beacon_registrations_lock);
@@ -12854,7 +12865,8 @@ static int nl80211_nan_add_func(struct sk_buff *skb,
 		goto out;
 	}
 
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_ADD_NAN_FUNCTION);
 	/* This can't really happen - we just allocated 4KB */
 	if (WARN_ON(!hdr)) {
@@ -13108,7 +13120,8 @@ static int nl80211_get_protocol_features(struct sk_buff *skb,
 	if (!msg)
 		return -ENOMEM;
 
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_GET_PROTOCOL_FEATURES);
 	if (!hdr)
 		goto nla_put_failure;
@@ -13183,7 +13196,7 @@ static int nl80211_crit_protocol_start(struct sk_buff *skb,
 
 	ret = rdev_crit_proto_start(rdev, wdev, proto, duration);
 	if (!ret)
-		rdev->crit_proto_nlportid = info->snd_portid;
+		rdev->crit_proto_nlportid = genl_info_snd_portid(info);
 
 	return ret;
 }
@@ -13459,7 +13472,7 @@ static int nl80211_vendor_cmd_dump(struct sk_buff *skb,
 	}
 
 	while (1) {
-		void *hdr = nl80211hdr_put(skb, NETLINK_CB(cb->skb).portid,
+		void *hdr = nl80211hdr_put(skb, NETLINK_CB_PORTID(cb->skb),
 					   cb->nlh->nlmsg_seq, NLM_F_MULTI,
 					   NL80211_CMD_VENDOR);
 		if (!hdr)
@@ -13512,7 +13525,7 @@ struct sk_buff *__cfg80211_alloc_reply_skb(struct wiphy *wiphy,
 		return NULL;
 
 	return __cfg80211_alloc_vendor_skb(rdev, NULL, approxlen,
-					   rdev->cur_cmd_info->snd_portid,
+					   genl_info_snd_portid(rdev->cur_cmd_info),
 					   rdev->cur_cmd_info->snd_seq,
 					   cmd, attr, NULL, GFP_KERNEL);
 }
@@ -13545,7 +13558,7 @@ unsigned int cfg80211_vendor_cmd_get_sender(struct wiphy *wiphy)
 	if (WARN_ON(!rdev->cur_cmd_info))
 		return 0;
 
-	return rdev->cur_cmd_info->snd_portid;
+	return genl_info_snd_portid(rdev->cur_cmd_info);
 }
 EXPORT_SYMBOL_GPL(cfg80211_vendor_cmd_get_sender);
 
@@ -14015,7 +14028,8 @@ static int nl80211_get_ftm_responder_stats(struct sk_buff *skb,
 	if (!msg)
 		return -ENOMEM;
 
-	hdr = nl80211hdr_put(msg, info->snd_portid, info->snd_seq, 0,
+	hdr = nl80211hdr_put(msg, genl_info_snd_portid(info), info->snd_seq,
+			     0,
 			     NL80211_CMD_GET_FTM_RESPONDER_STATS);
 	if (!hdr)
 		goto nla_put_failure;
@@ -17285,29 +17299,31 @@ static int nl80211_netlink_notify(struct notifier_block * nb,
 		list_for_each_entry_rcu(sched_scan_req,
 					&rdev->sched_scan_req_list,
 					list) {
-			if (sched_scan_req->owner_nlportid == notify->portid) {
+			if (sched_scan_req->owner_nlportid == netlink_notify_portid(notify)) {
 				sched_scan_req->nl_owner_dead = true;
 				schedule_work(&rdev->sched_scan_stop_wk);
 			}
 		}
 
 		list_for_each_entry_rcu(wdev, &rdev->wiphy.wdev_list, list) {
-			cfg80211_mlme_unregister_socket(wdev, notify->portid);
+			cfg80211_mlme_unregister_socket(wdev,
+							netlink_notify_portid(notify));
 
-			if (wdev->owner_nlportid == notify->portid) {
+			if (wdev->owner_nlportid == netlink_notify_portid(notify)) {
 				wdev->nl_owner_dead = true;
 				schedule_work(&rdev->destroy_work);
-			} else if (wdev->conn_owner_nlportid == notify->portid) {
+			} else if (wdev->conn_owner_nlportid == netlink_notify_portid(notify)) {
 				schedule_work(&wdev->disconnect_wk);
 			}
 
-			cfg80211_release_pmsr(wdev, notify->portid);
+			cfg80211_release_pmsr(wdev,
+					      netlink_notify_portid(notify));
 		}
 
 		spin_lock_bh(&rdev->beacon_registrations_lock);
 		list_for_each_entry_safe(reg, tmp, &rdev->beacon_registrations,
 					 list) {
-			if (reg->nlportid == notify->portid) {
+			if (reg->nlportid == netlink_notify_portid(notify)) {
 				list_del(&reg->list);
 				kfree(reg);
 				break;
@@ -17322,7 +17338,7 @@ static int nl80211_netlink_notify(struct notifier_block * nb,
 	 * It is possible that the user space process that is controlling the
 	 * indoor setting disappeared, so notify the regulatory core.
 	 */
-	regulatory_netlink_notify(notify->portid);
+	regulatory_netlink_notify(netlink_notify_portid(notify));
 	return NOTIFY_OK;
 }
 
