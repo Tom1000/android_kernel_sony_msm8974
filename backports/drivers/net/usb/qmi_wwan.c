@@ -152,6 +152,16 @@ static void qmimux_get_stats64(struct net_device *net,
 		stats->tx_bytes += tx_bytes;
 	}
 }
+#if LINUX_VERSION_IS_LESS(4,11,0)
+/* Just declare it here to keep sparse happy */
+struct rtnl_link_stats64 *bp_qmimux_get_stats64(struct net_device *dev,
+						struct rtnl_link_stats64 *stats);
+struct rtnl_link_stats64 *
+bp_qmimux_get_stats64(struct net_device *dev, struct rtnl_link_stats64 *stats){
+	qmimux_get_stats64(dev, stats);
+	return stats;
+}
+#endif
 
 #if LINUX_VERSION_IS_LESS(4,10,0)
 static int __change_mtu(struct net_device *ndev, int new_mtu){
@@ -170,7 +180,12 @@ static const struct net_device_ops qmimux_netdev_ops = {
 	.ndo_open        = qmimux_open,
 	.ndo_stop        = qmimux_stop,
 	.ndo_start_xmit  = qmimux_start_xmit,
+#if LINUX_VERSION_IS_GEQ(4,11,0)
 	.ndo_get_stats64 = qmimux_get_stats64,
+#else
+	.ndo_get_stats64 = bp_qmimux_get_stats64,
+#endif
+
 };
 
 static void qmimux_setup(struct net_device *dev)
@@ -641,7 +656,12 @@ static const struct net_device_ops qmi_wwan_netdev_ops = {
 	.ndo_start_xmit		= usbnet_start_xmit,
 	.ndo_tx_timeout		= usbnet_tx_timeout,
 	.ndo_change_mtu		= usbnet_change_mtu,
+#if LINUX_VERSION_IS_GEQ(4,11,0)
 	.ndo_get_stats64	= usbnet_get_stats64,
+#else
+	.ndo_get_stats64 = bp_usbnet_get_stats64,
+#endif
+
 	.ndo_set_mac_address	= qmi_wwan_mac_addr,
 	.ndo_validate_addr	= eth_validate_addr,
 };
