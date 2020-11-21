@@ -206,6 +206,15 @@ static void qtnf_netdev_tx_timeout(struct net_device *ndev, unsigned int txqueue
 		queue_work(bus->workqueue, &vif->reset_work);
 	}
 }
+#if LINUX_VERSION_IS_LESS(5,6,0)
+/* Just declare it here to keep sparse happy */
+void bp_qtnf_netdev_tx_timeout(struct net_device *dev);
+void bp_qtnf_netdev_tx_timeout(struct net_device *dev)
+{
+	qtnf_netdev_tx_timeout(dev, 0);
+}
+EXPORT_SYMBOL_GPL(bp_qtnf_netdev_tx_timeout);
+#endif
 
 static int qtnf_netdev_set_mac_address(struct net_device *ndev, void *addr)
 {
@@ -249,7 +258,12 @@ const struct net_device_ops qtnf_netdev_ops = {
 	.ndo_open = qtnf_netdev_open,
 	.ndo_stop = qtnf_netdev_close,
 	.ndo_start_xmit = qtnf_netdev_hard_start_xmit,
+#if LINUX_VERSION_IS_GEQ(5,6,0)
 	.ndo_tx_timeout = qtnf_netdev_tx_timeout,
+#else
+	.ndo_tx_timeout = bp_qtnf_netdev_tx_timeout,
+#endif
+
 #if LINUX_VERSION_IS_GEQ(4,11,0)
 	.ndo_get_stats64 = qtnf_netdev_get_stats64,
 #else
