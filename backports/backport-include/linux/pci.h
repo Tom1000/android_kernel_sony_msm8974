@@ -207,6 +207,15 @@ static inline int pci_enable_msix_exact(struct pci_dev *dev,
 #endif
 #endif /* CONFIG_PCI */
 
+#ifndef CONFIG_PCI
+static inline int pci_pcie_type (struct pci_dev *dev)
+{
+	pr_err("pci_pcie_type: This should not be called, as CONFIG_PCI is not set!");
+	BUG_ON(true);
+}
+#endif
+
+
 #if LINUX_VERSION_IS_LESS(4,9,0) &&			\
 	!LINUX_VERSION_IN_RANGE(3,12,69, 3,13,0) &&	\
 	!LINUX_VERSION_IN_RANGE(4,4,37, 4,5,0) &&	\
