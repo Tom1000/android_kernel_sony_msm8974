@@ -15,24 +15,50 @@
 /include/ "msm8974pro-ab-shinano_common.dtsi"
 
 
-/* TTT WLAN */
+/* Prerequisites for brcmfmac WLAN driver*/
 &sdhc_3 {
+	compatible = "qcom,sdhci-msm", "qcom,msm8974-sdhci", "qcom,sdhci-msm-v4";
 	status = "ok";
 
+	max-frequency = <100000000>;
 	non-removable;
-
+	
+	/* pinctrl is currently not activated on shinano 
+	pinctrl-names = "default";
+	pinctrl-0 = <&sdhc3_pin_a>;
+	*/
+	
+	/* define address & size cells for subnode */
 	#address-cells = <1>;
 	#size-cells = <0>;
 
-	bcrmf@1 {
-		compatible = "brcm,bcm4339-fmac", "brcm,bcm4329-fmac";
-		reg = <1>;
+	bcrmf: wifi@1 {
+			compatible = "brcm,bcm4329-fmac";
+			reg = <0x1>;
 
-		brcm,drive-strength = <10>;
+			brcm,drive-strength = <10>;
+            
+            /* see above
+			pinctrl-names = "default";
+			pinctrl-0 = <&wlan_sleep_clk_pin>;
+            */			
 
+            /* with this interrupt the wifi device may wake up the host cpu
+            * wlan_sleep_clk_pin = pm8941_gpio pin 17, der hat wlan_sleep_clk_pin
+            * im shinano wlan driver ist es GPIO 67 (0x43) als IRQ
+            * in msm8974 dtsi ist es &msmgpio 37 0x8 als sdiowakeup_irq
+            */
+			interrupt-parent = <&msmgpio>;
+			interrupts = <37 0x8>;  
+			interrupt-names = "host-wake";
+ 
 	};
 };
 
+&wlan_regulator_pin {
+		somc,keep_high_at_init;
+		output-high;
+};
 
 &soc {
 };
