@@ -256,4 +256,11 @@ static inline bool of_property_read_bool(const struct device_node *np,
 }
 #endif
 
+#if LINUX_VERSION_IS_LESS(3,5,0)
+const __be32 *of_prop_next_u32(struct property *prop, const __be32 *cur,
+			       u32 *pu);
+const char *of_prop_next_string(struct property *prop, const char *cur);
+#endif
+
+
 #endif	/* _COMPAT_LINUX_OF_H */
