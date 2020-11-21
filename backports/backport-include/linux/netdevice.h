@@ -362,7 +362,10 @@ static inline void netif_trans_update(struct net_device *dev)
 static inline int _bp_netdev_upper_dev_link(struct net_device *dev,
 					    struct net_device *upper_dev)
 {
-	return netdev_upper_dev_link(dev, upper_dev);
+	/* netdev_upper_dev_link unavailable in 3.4 kernel but not required for sdio devices*/
+	/*return netdev_upper_dev_link(dev, upper_dev);*/
+	pr_err("TTT: netdevice: netdev_upper_dev_link called but not implemented!");
+	return -1;
 }
 #define netdev_upper_dev_link3(dev, upper, extack) \
 	netdev_upper_dev_link(dev, upper)
