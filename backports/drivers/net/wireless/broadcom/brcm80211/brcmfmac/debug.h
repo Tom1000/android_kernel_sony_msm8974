@@ -7,6 +7,7 @@
 #define BRCMFMAC_DEBUG_H
 
 #include <linux/net.h>	/* net_ratelimit() */
+#include <linux/err.h>
 
 /* message levels */
 #define BRCMF_TRACE_VAL		0x00000002
