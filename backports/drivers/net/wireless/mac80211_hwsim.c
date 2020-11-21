@@ -609,7 +609,7 @@ enum hwsim_multicast_groups {
 	HWSIM_MCGRP_CONFIG,
 };
 
-static const struct genl_multicast_group hwsim_mcgrps[] = {
+static __genl_const struct genl_multicast_group hwsim_mcgrps[] = {
 	[HWSIM_MCGRP_CONFIG] = { .name = "config", },
 };
 
@@ -3888,7 +3888,7 @@ done:
 }
 
 /* Generic Netlink operations array */
-static const struct genl_ops hwsim_ops[] = {
+static __genl_const struct genl_ops hwsim_ops[] = {
 	{
 		.cmd = HWSIM_CMD_REGISTER,
 		.validate = GENL_DONT_VALIDATE_STRICT | GENL_DONT_VALIDATE_DUMP,
