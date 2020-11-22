@@ -74,12 +74,19 @@ static int validate_nla(const struct nlattr *nla, int maxtype,
 			return -ERANGE;
 		break;
 
+	case NLA_NESTED_ARRAY:
+		/*This is a dummy entry only and should not be called
+		 * If you need this, look for commit 1501d13596b9 */
+		BUG_ON(1);
+		break;
+
 	case NLA_NESTED:
 		/* a nested attributes is allowed to be empty; if its not,
 		 * it must have a size of at least NLA_HDRLEN.
 		 */
 		if (attrlen == 0)
 			break;
+
 	default:
 		if (pt->len)
 			minlen = pt->len;
