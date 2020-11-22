@@ -3,6 +3,9 @@
  * Copyright (c) 2010 Broadcom Corporation
  */
 
+/*TTT*/
+#define DEBUG
+
 #include <linux/types.h>
 #include <linux/atomic.h>
 #include <linux/kernel.h>

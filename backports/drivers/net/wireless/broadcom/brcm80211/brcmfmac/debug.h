@@ -3,6 +3,9 @@
  * Copyright (c) 2010 Broadcom Corporation
  */
 
+/*TTT*/
+#define DEBUG
+
 #ifndef BRCMFMAC_DEBUG_H
 #define BRCMFMAC_DEBUG_H
 
