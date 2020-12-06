@@ -24,7 +24,7 @@
 #define CLD80211_MULTICAST_GROUP_FATAL_EVENTS   "fatal_events"
 #define CLD80211_MULTICAST_GROUP_OEM_MSGS       "oem_msgs"
 
-static const struct genl_multicast_group nl_mcgrps[] = {
+static struct genl_multicast_group nl_mcgrps[] = {
 	[CLD80211_MCGRP_SVC_MSGS] = { .name =
 			CLD80211_MULTICAST_GROUP_SVC_MSGS},
 	[CLD80211_MCGRP_HOST_LOGS] = { .name =
@@ -70,7 +70,7 @@ static const struct nla_policy cld80211_policy[CLD80211_ATTR_MAX + 1] = {
 	[CLD80211_ATTR_CMD_TAG_DATA] = { .type = NLA_NESTED },
 };
 
-static int cld80211_pre_doit(const struct genl_ops *ops, struct sk_buff *skb,
+static int cld80211_pre_doit(struct genl_ops *ops, struct sk_buff *skb,
 			     struct genl_info *info)
 {
 	u8 cmd_id = ops->cmd;
@@ -100,6 +100,7 @@ static struct genl_family cld80211_fam __ro_after_init = {
 	.n_ops = ARRAY_SIZE(nl_ops),
 	.mcgrps = nl_mcgrps,
 	.n_mcgrps = ARRAY_SIZE(nl_mcgrps),
+	.policy = cld80211_policy,
 };
 
 int register_cld_cmd_cb(u8 cmd_id, cld80211_cb func, void *cb_ctx)
@@ -158,7 +159,7 @@ static int cld80211_doit(struct sk_buff *skb, struct genl_info *info)
 	if (info->attrs[CLD80211_ATTR_VENDOR_DATA]) {
 		cld_cb(nla_data(info->attrs[CLD80211_ATTR_VENDOR_DATA]),
 		       nla_len(info->attrs[CLD80211_ATTR_VENDOR_DATA]),
-		       cld_ctx, info->snd_portid);
+		       cld_ctx, info->snd_pid);
 	} else {
 		pr_err("CLD80211: No CLD80211_ATTR_VENDOR_DATA\n");
 		return -EINVAL;
@@ -177,7 +178,6 @@ static int __cld80211_init(void)
 		nl_ops[i].cmd = i + 1;
 		nl_ops[i].doit = cld80211_doit;
 		nl_ops[i].flags = GENL_ADMIN_PERM;
-		nl_ops[i].policy = cld80211_policy;
 	}
 
 	err = genl_register_family(&cld80211_fam);
