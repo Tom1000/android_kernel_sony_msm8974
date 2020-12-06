@@ -49,6 +49,7 @@ source "$BACKPORT_DIR/drivers/net/wireless/st/Kconfig"
 source "$BACKPORT_DIR/drivers/net/wireless/ti/Kconfig"
 source "$BACKPORT_DIR/drivers/net/wireless/zydas/Kconfig"
 source "$BACKPORT_DIR/drivers/net/wireless/quantenna/Kconfig"
+source "$BACKPORT_DIR/drivers/net/wireless/cnss_genl/Kconfig"
 
 config BACKPORT_PCMCIA_RAYCS
 	depends on n

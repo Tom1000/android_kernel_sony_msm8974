@@ -29,3 +29,6 @@ obj-$(CONFIG_BACKPORT_USB_NET_RNDIS_WLAN)	+= rndis_wlan.o
 obj-$(CONFIG_BACKPORT_MAC80211_HWSIM)	+= mac80211_hwsim.o
 #
 #obj-$(CONFIG_BACKPORT_VIRT_WIFI)	+= virt_wifi.o
+
+obj-$(CONFIG_BACKPORT_CNSS_GENL) += cnss_genl/
+
